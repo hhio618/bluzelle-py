@@ -1,1 +1,0 @@
-from bluzelle.wallet.wallet import Wallet

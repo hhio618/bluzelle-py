@@ -1,8 +1,8 @@
 from typing import Any
 from mnemonic import Mnemonic
 from bluzelle.tendermint import Tendermint34Client
-from cosmospy import generate_wallet, BIP32DerivationError, seed_to_privkey, privkey_to_pubkey, pubkey_to_address
-from bluzelle.wallet import Wallet
+from bluzelle.cosmos import generate_wallet, BIP32DerivationError, seed_to_privkey, privkey_to_pubkey, pubkey_to_address
+from bluzelle.cosmos.typing import Wallet
 from bluzelle.client import QueryClient, TransactionClient
 from bluzelle.codec.crud.query_pb2_grpc import QueryStub
 from bluzelle.codec.crud.tx_pb2_grpc import MsgStub
@@ -39,6 +39,7 @@ class Bluzelle:
                         privkey = seed_to_privkey(mnemonic, path=path)
                         pubkey = privkey_to_pubkey(privkey)
                         addr = pubkey_to_address(pubkey, hrp=BLUEZELLE_BECH32_HRP)
+                        print(self.wallet)
                         self.wallet.derivation_path = path
                         self.wallet.seed = mnemonic
                         self.wallet.private_key = privkey

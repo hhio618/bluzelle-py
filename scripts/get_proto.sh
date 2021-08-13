@@ -36,7 +36,9 @@ mkdir -p proto/cosmos/tx/signing/v1beta1
 curl https://raw.githubusercontent.com/cosmos/cosmos-sdk/master/proto/cosmos/tx/signing/v1beta1/signing.proto > proto/cosmos/tx/signing/v1beta1/signing.proto
 
 mkdir -p proto/cosmos/crypto/multisig/v1beta1
+mkdir -p proto/cosmos/crypto/secp256k1
 curl https://raw.githubusercontent.com/cosmos/cosmos-sdk/master/proto/cosmos/crypto/multisig/v1beta1/multisig.proto > proto/cosmos/crypto/multisig/v1beta1/multisig.proto
+curl https://raw.githubusercontent.com/cosmos/cosmos-sdk/master/proto/cosmos/crypto/secp256k1/keys.proto > proto/cosmos/crypto/secp256k1/keys.proto
 
 mkdir -p proto/cosmos/base/abci/v1beta1
 curl https://raw.githubusercontent.com/cosmos/cosmos-sdk/master/proto/cosmos/base/abci/v1beta1/abci.proto > proto/cosmos/base/abci/v1beta1/abci.proto

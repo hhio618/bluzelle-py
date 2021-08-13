@@ -73,18 +73,22 @@ class Tendermint34Client:
             timeout=3
         )
 
-        #try:
-        #    r.raise_for_status()
-        #except Exception as er:
-        #    print(er)
+        try:
+           r.raise_for_status()
+        except Exception as er:
+           raise er
 
         response = r.content
-        print("http response: ", response)
-
+        
         if is_string(response):
-            result = json.loads(bytes_to_str(response))["result"]["response"]
+            result = json.loads(bytes_to_str(response))
+        if "error" in result:
+            raise ValueError(result["error"])
+    
+        result = result["result"]
+        print("json+rpc result: ", result)
 
-        if result["code"]!=0:
+        if "code" in result and result["code"]!=0:
             raise ValueError(result["log"])
         return result
    
@@ -101,9 +105,8 @@ class Tendermint34Client:
         assert False
 
     def _send_transaction(self, name, tx):
-        if is_bytes(tx):
-            tx = bytes_to_str(base64.b64encode(tx))
-        return self.call(name, tx)
+        print("^^^^^^^^^^^^^^^6sig: ", list(tx.signatures[0]))
+        return self.call(name, {"tx": list(tx.SerializeToString())})
 
     def broadcast_tx_sync(self, tx):
         return self._send_transaction('broadcast_tx_sync', tx)
@@ -136,5 +139,5 @@ class Tendermint34Client:
                 payload["data"] = base64.b64decode(payload["data"]).hex()
             result = self.call(method_name, payload)
             print("################ result: ", result)
-            return result['value']
+            return result['response']['value']
         return wrapper

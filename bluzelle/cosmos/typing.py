@@ -11,7 +11,7 @@ else:
 SyncMode = Literal["sync", "async", "block"]
 
 
-class Wallet(TypedDict):
+class Wallet:
     seed: str
     derivation_path: str
     private_key: bytes

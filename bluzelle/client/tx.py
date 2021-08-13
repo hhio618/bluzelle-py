@@ -1,4 +1,5 @@
 
+from bluzelle.codec.cosmos.tx.signing.v1beta1.signing_pb2 import SignMode, SIGN_MODE_DIRECT
 from bluzelle.client import query
 from bluzelle.client.query import QueryClient
 from bluzelle.client.rpc import RpcChannel
@@ -14,9 +15,11 @@ from bluzelle.codec.cosmos.tx.v1beta1.tx_pb2 import Tx
 from bluzelle.codec.cosmos.auth.v1beta1.auth_pb2 import BaseAccount
 from bluzelle.codec.cosmos.auth.v1beta1.query_pb2_grpc import QueryStub
 from bluzelle.codec.cosmos.auth.v1beta1.query_pb2 import QueryAccountRequest, QueryAccountResponse
-from bluzelle.wallet import Wallet
-from cosmospy import Transaction
+from bluzelle.cosmos._wallet import Wallet
+from bluzelle.cosmos import Transaction
+from bluzelle.cosmos._sign_mode_handler import DirectSignModeHandler
 from .rpc import Callable, RpcChannel
+
 
 
 class TxCallable(Callable):
@@ -49,6 +52,7 @@ class TransactionClient(RpcChannel):
 
     def prepair_transaction(self, reqs: List[Message]):
         account = self.get_account(self.wallet.address)
+        chain_id = self.get_chain_id()
         tx = Transaction(
             privkey=self.wallet.private_key,
             account_num=account.account_number,
@@ -56,14 +60,11 @@ class TransactionClient(RpcChannel):
             fee=self.max_gas* self.gas_price,
             gas=self.max_gas,
             memo="",
-            chain_id="cosmoshub-4",
-            sync_mode="sync",
+            chain_id=chain_id,
         )
-        for req in reqs:
-            tx._msgs.append(json_format.MessageToDict(req))
-        # QUICKFIX: convert json to dict
-        out =  json.loads(tx.get_pushable())
-        return out
+        signed_tx = tx.sign(account, SIGN_MODE_DIRECT, sign_mode_handler=DirectSignModeHandler(), messages=reqs)
+        return signed_tx
+
     
     def submit_transaction(self, signed_tx: bytes):
         result = self.tendermint34Client.broadcast_tx_sync(signed_tx)
@@ -99,3 +100,9 @@ class TransactionClient(RpcChannel):
         if account.address != address:
             return None
         return account
+    
+    def get_chain_id(self) -> BaseAccount:
+       node_info = self.tendermint34Client.status()
+
+       return node_info['node_info']['network']
+        
