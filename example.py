@@ -11,149 +11,177 @@ uuid = str((datetime.datetime.now() - datetime.datetime.utcfromtimestamp(0)).tot
 
 
 def populate_uuid(sdk):
-    sdk.db.withTransactions([
+    sdk.db.WithTransactions([
         MsgCreate(
-            creator=sdk.db.address,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key='firstKey',
             value='firstValue'.encode('utf-8'),
-            metadata=[],
             lease=Lease(hours=1),
+            metadata=None,
+            credentials=None,
+            wait_for_ready=True,
+            compression=False,
         ),
         MsgCreate(
-            creator=sdk.db.address,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key='secondKey',
             value='firstValue'.encode('utf-8'),
-            metadata=[],
             lease=Lease(hours=1),
+            metadata=None,
+            credentials=None,
+            wait_for_ready=True,
+            compression=False,
         ),
         MsgCreate(
-            creator=sdk.db.address,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key='thirdKey',
             value='firstValue'.encode('utf-8'),
-            metadata=[],
             lease=Lease(hours=1),
+            metadata=None,
+            credentials=None,
+            wait_for_ready=True,
+            compression=False,
         )
     ],
         memo='optionalMemo')
 
 
 def diff_cost_with_different_lease(sdk):
-    response = sdk.bank.Q.balance(
+    response_1 = sdk.bank.q.Balance(
         None,
         QueryBalanceRequest(
-            address=sdk.db.address,
+            address=sdk.wallet.address,
             denom='ubnt',
         ),
     )
-    firstCost = int(response.balance.amount)
-    sdk.db.tx.create_(
+    first_cost = int(response_1.balance.amount)
+    sdk.db.tx.Create(
         None,
         MsgCreate(
-            creator=sdk.db.address,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key='someKeyA',
             value='someValue'.encode('utf-8'),
             lease=Lease(hours=1),
         ),
+
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
+
     )
-    response = sdk.bank.Q.balance(
+    response_2 = sdk.bank.q.Balance(
         None,
         QueryBalanceRequest(
-            address=sdk.db.address,
+            address=sdk.wallet.address,
             denom='ubnt',
         ),
     )
-    firstCost -= int(response.balance.amount)
+    first_cost -= int(response_2.balance.amount)
     # creating another key 
-    response = sdk.bank.Q.balance(
+    response_3 = sdk.bank.Q.balance(
         None,
         QueryBalanceRequest(
-            address=sdk.db.address,
+            address=sdk.wallet.address,
             denom='ubnt',
         ),
     )
-    secondCost = int(response.balance.amount)
+    second_cost = int(response_3.balance.amount)
     sdk.db.tx.create_(
         None,
         MsgCreate(
-            creator=sdk.db.address,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key='someKeyB',
             value='someValue'.encode('utf-8'),
             lease=Lease(days=1),
         ),
+
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
-    response = sdk.bank.Q.balance(
+    response_4 = sdk.bank.q.Balance(
         None,
         QueryBalanceRequest(
-            address=sdk.db.address,
+            address=sdk.wallet.address,
             denom='ubnt',
         ),
     )
-    secondCost -= int(response.balance.amount)
+    second_cost -= int(response_4.balance.amount)
 
-    return secondCost - firstCost
+    return second_cost - first_cost
 
 
 def diff_cost_equal_message_size(sdk):
-    response = sdk.bank.Q.balance(
+    response_1 = sdk.bank.q.Balance(
         None,
         QueryBalanceRequest(
-            address=sdk.db.address,
+            address=sdk.wallet.address,
             denom='ubnt',
         ),
     )
-    firstCost = int(response.balance.amount)
-    sdk.db.tx.create_(
+    first_cost = int(response_1.balance.amount)
+    sdk.db.tx.Create(
         None,
         MsgCreate(
-            creator=sdk.db.address,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key='someKeyA',
             value='someValue'.encode('utf-8'),
             lease=Lease(hours=1),
         ),
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
-    response = sdk.bank.Q.balance(
+    response_2 = sdk.bank.q.Balance(
         None,
         QueryBalanceRequest(
-            address=sdk.db.address,
+            address=sdk.wallet.address,
             denom='ubnt',
         ),
     )
-    firstCost -= int(response.balance.amount)
+    first_cost -= int(response_2.balance.amount)
     # creating another key 
-    response = sdk.bank.Q.balance(
+    response_3 = sdk.bank.q.Balance(
         None,
         QueryBalanceRequest(
-            address=sdk.db.address,
+            address=sdk.wallet.address,
             denom='ubnt',
         ),
     )
-    secondCost = int(response.balance.amount)
-    sdk.db.tx.create_(
+    second_cost = int(response_3.balance.amount)
+    sdk.db.tx.Create(
         None,
         MsgCreate(
-            creator=sdk.db.address,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key='someKeyB',
             value='someValue'.encode('utf-8'),
             lease=Lease(hours=1),
         ),
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
-    response = sdk.bank.Q.balance(
+    response_4 = sdk.bank.q.Balance(
         None,
         QueryBalanceRequest(
-            address=sdk.db.address,
+            address=sdk.wallet.address,
             denom='ubnt',
         ),
     )
-    secondCost -= int(response.balance.amount)
+    second_cost -= int(response_4.balance.amount)
 
-    return secondCost - firstCost
+    return second_cost - first_cost
 
 
 if __name__ == '__main__':
@@ -165,6 +193,7 @@ if __name__ == '__main__':
         port=26657,
         max_gas=100000000,
         gas_price=0.002,
+
     )
 
     print(f'Created key: myKey, value: myValue in {datetime.datetime.now()}')
@@ -176,7 +205,11 @@ if __name__ == '__main__':
             key='myKey',
             value='myValue'.encode('utf-8'),
             lease=Lease(hours=1),
-        )
+        ),
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     response = sdk.db.q.Read(
         None,
@@ -186,7 +219,7 @@ if __name__ == '__main__':
         )
     )
     print(f'Read key: myKey, value: {response.value} in {datetime.datetime.now()}')
-    sdk.db.tx.update(
+    sdk.db.tx.Update(
         None,
         MsgUpdate(
             creator=sdk.wallet.address,
@@ -194,6 +227,10 @@ if __name__ == '__main__':
             key='myKey',
             value='updatedValue'.encode('utf-8'),
             lease=Lease(minutes=1),
+            metadata=None,
+            credentials=None,
+            wait_for_ready=True,
+            compression=False,
         )
     )
 
@@ -205,7 +242,7 @@ if __name__ == '__main__':
         )
     )
     print(f'Update key: myKey, value: {response.value} in {datetime.datetime.now()}')
-    response = sdk.db.q.get_lease(
+    response = sdk.db.q.GetLease(
         None,
         QueryGetLeaseRequest(
             uuid=uuid,
@@ -217,7 +254,7 @@ if __name__ == '__main__':
     print('Creating 3 new key-value pairs')
 
     # fetch the inserted values 
-    response = sdk.db.Q.keyValues(
+    response = sdk.db.q.KeyValues(
         None,
         QueryKeyValuesRequest(uuid=uuid),
     )
