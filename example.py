@@ -18,10 +18,6 @@ def populate_uuid(sdk):
             key='firstKey',
             value='firstValue'.encode('utf-8'),
             lease=Lease(hours=1),
-            metadata=None,
-            credentials=None,
-            wait_for_ready=True,
-            compression=False,
         ),
         MsgCreate(
             creator=sdk.wallet.address,
@@ -29,10 +25,6 @@ def populate_uuid(sdk):
             key='secondKey',
             value='firstValue'.encode('utf-8'),
             lease=Lease(hours=1),
-            metadata=None,
-            credentials=None,
-            wait_for_ready=True,
-            compression=False,
         ),
         MsgCreate(
             creator=sdk.wallet.address,
@@ -40,10 +32,6 @@ def populate_uuid(sdk):
             key='thirdKey',
             value='firstValue'.encode('utf-8'),
             lease=Lease(hours=1),
-            metadata=None,
-            credentials=None,
-            wait_for_ready=True,
-            compression=False,
         )
     ],
         memo='optionalMemo')
@@ -51,15 +39,18 @@ def populate_uuid(sdk):
 
 def diff_cost_with_different_lease(sdk):
     response_1 = sdk.bank.q.Balance(
-        None,
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom='ubnt',
         ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     first_cost = int(response_1.balance.amount)
     sdk.db.tx.Create(
-        None,
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -67,32 +58,38 @@ def diff_cost_with_different_lease(sdk):
             value='someValue'.encode('utf-8'),
             lease=Lease(hours=1),
         ),
-
+        timeout=3000,
         metadata=None,
         credentials=None,
         wait_for_ready=True,
         compression=False,
-
     )
     response_2 = sdk.bank.q.Balance(
-        None,
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom='ubnt',
         ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     first_cost -= int(response_2.balance.amount)
     # creating another key 
     response_3 = sdk.bank.Q.balance(
-        None,
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom='ubnt',
         ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     second_cost = int(response_3.balance.amount)
-    sdk.db.tx.create_(
-        None,
+    sdk.db.tx.Create(
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -100,7 +97,7 @@ def diff_cost_with_different_lease(sdk):
             value='someValue'.encode('utf-8'),
             lease=Lease(days=1),
         ),
-
+        timeout=3000,
         metadata=None,
         credentials=None,
         wait_for_ready=True,
@@ -112,6 +109,11 @@ def diff_cost_with_different_lease(sdk):
             address=sdk.wallet.address,
             denom='ubnt',
         ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     second_cost -= int(response_4.balance.amount)
 
@@ -120,15 +122,18 @@ def diff_cost_with_different_lease(sdk):
 
 def diff_cost_equal_message_size(sdk):
     response_1 = sdk.bank.q.Balance(
-        None,
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom='ubnt',
         ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     first_cost = int(response_1.balance.amount)
     sdk.db.tx.Create(
-        None,
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -136,30 +141,38 @@ def diff_cost_equal_message_size(sdk):
             value='someValue'.encode('utf-8'),
             lease=Lease(hours=1),
         ),
+        timeout=3000,
         metadata=None,
         credentials=None,
         wait_for_ready=True,
         compression=False,
     )
     response_2 = sdk.bank.q.Balance(
-        None,
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom='ubnt',
         ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     first_cost -= int(response_2.balance.amount)
     # creating another key 
     response_3 = sdk.bank.q.Balance(
-        None,
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom='ubnt',
         ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     second_cost = int(response_3.balance.amount)
     sdk.db.tx.Create(
-        None,
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -167,17 +180,22 @@ def diff_cost_equal_message_size(sdk):
             value='someValue'.encode('utf-8'),
             lease=Lease(hours=1),
         ),
+        timeout=3000,
         metadata=None,
         credentials=None,
         wait_for_ready=True,
         compression=False,
     )
     response_4 = sdk.bank.q.Balance(
-        None,
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom='ubnt',
         ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     second_cost -= int(response_4.balance.amount)
 
@@ -186,68 +204,79 @@ def diff_cost_equal_message_size(sdk):
 
 if __name__ == '__main__':
     sdk = Bluzelle(
-        mnemonic="space dilemma domain payment snap "
-                 "crouch arrange fantasy draft shaft fitness rain habit "
-                 "dynamic tip faith mushroom please power kick impulse logic wet cricket",
+        mnemonic="space dilemma domain payment snap crouch arrange"
+                 " fantasy draft shaft fitness rain habit dynamic tip "
+                 "faith mushroom please power kick impulse logic wet cricket",
         host='https://client.sentry.testnet.private.bluzelle.com',
         port=26657,
         max_gas=100000000,
         gas_price=0.002,
-
     )
 
-    print(f'Created key: myKey, value: myValue in {datetime.datetime.now()}')
     sdk.db.tx.Create(
-        None,
         MsgCreate(
-            creator=sdk.wallet.address,
+            creator="bluzelle1qlme4k6gdrw25vues9kcz3nm6w8c38ml82kz5k",
             uuid=uuid,
             key='myKey',
             value='myValue'.encode('utf-8'),
             lease=Lease(hours=1),
         ),
+        timeout=3000,
         metadata=None,
         credentials=None,
         wait_for_ready=True,
         compression=False,
     )
+    print(f'Created key: myKey, value: myValue in {datetime.datetime.now()}')
     response = sdk.db.q.Read(
-        None,
         QueryReadRequest(
             uuid=uuid,
             key='myKey',
-        )
+        ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     print(f'Read key: myKey, value: {response.value} in {datetime.datetime.now()}')
     sdk.db.tx.Update(
-        None,
         MsgUpdate(
             creator=sdk.wallet.address,
             uuid=uuid,
             key='myKey',
             value='updatedValue'.encode('utf-8'),
             lease=Lease(minutes=1),
-            metadata=None,
-            credentials=None,
-            wait_for_ready=True,
-            compression=False,
-        )
+        ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
 
     response = sdk.db.q.Read(
-        None,
         QueryReadRequest(
             uuid=uuid,
             key='myKey',
-        )
+        ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     print(f'Update key: myKey, value: {response.value} in {datetime.datetime.now()}')
     response = sdk.db.q.GetLease(
-        None,
         QueryGetLeaseRequest(
             uuid=uuid,
             key='myKey',
-        )
+        ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     print(f"remaining lease time {response.seconds}")
     populate_uuid(sdk)
@@ -255,8 +284,12 @@ if __name__ == '__main__':
 
     # fetch the inserted values 
     response = sdk.db.q.KeyValues(
-        None,
         QueryKeyValuesRequest(uuid=uuid),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     print(f'Reading all values in {datetime.datetime.now()}, {response.keyValues}')
 
@@ -267,42 +300,62 @@ if __name__ == '__main__':
     print(f'Total cost difference for 2 equal size creates is {cost_difference}')
 
     response = sdk.db.q.Search(
-        None,
         QuerySearchRequest(
             uuid=uuid,
             searchString='s',
-        )
+        ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     print(f'Key-values matching the search string "s": {response.keyValues} ')
     response = sdk.db.Q.getNShortestLeases(
-        None,
         QueryGetNShortestLeasesRequest(
             uuid=uuid,
             num=5,
-        )
+        ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
 
     print(f"Getting 5 shortest lease {response}")
     sdk.db.tx.RenewLeasesAll(
-        None,
         MsgRenewLeasesAll(
             creator=sdk.wallet.address,
             uuid=uuid,
             lease=Lease(seconds=10),
-        )
+        ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     print(f"Update leases to 10 seconds for all key-values")
     response = sdk.db.q.GetNShortestLeases(
-        None,
         QueryGetNShortestLeasesRequest(
             uuid=uuid,
             num=6,
-        )
+        ),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     print(f"Getting 6 shortest lease {response}")
     time.sleep(10)
     response = sdk.db.q.KeyValues(
-        None,
-        QueryKeyValuesRequest(uuid=uuid)
+        QueryKeyValuesRequest(uuid=uuid),
+        timeout=3000,
+        metadata=None,
+        credentials=None,
+        wait_for_ready=True,
+        compression=False,
     )
     print(f"Querying all key-values in {datetime.datetime.now()}")
