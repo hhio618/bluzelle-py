@@ -5,11 +5,12 @@
 # Setup
 The Python Library is not yet published on any package manager, To install and use follow the below instructions:
 
-```
-build the library
-- python setup.py bdist_wheel
-then the wheel for library is located under dist
-- pip install /path/to/wheelfile.whl
+```sh
+$ # build the library
+$ pip install "poetry==1.1.7"
+$ poetry config virtualenvs.create false
+$ poetry install --no-interaction --no-ansi
+$ pip install .
 ```
 
 # Quick Start
@@ -42,9 +43,9 @@ Note: if you want to run examples in library folder, place the codes inside a fi
 
 ### Websockets vs. HTTPS
 
-- Currently the sdk supports both websocket and https connections to the Bluzelle testnet
-- Use **websockets** (wss://client.sentry.testnet.private.bluzelle.com:26657) for greater performance
-- For **https** pass the url **https://client.sentry.testnet.private.bluzelle.com:26657** to the bluzelle constructor
+- Currently the sdk supports only https connections to the Bluzelle testnet
+- For **https** pass the url **https://client.sentry.testnet.private.bluzelle.com:26657** to the bluzelle constructor.
+- Support for **websockets** (wss://client.sentry.testnet.private.bluzelle.com:26657) will be added soon.
 
 # Usage
 
@@ -138,12 +139,12 @@ bank.tx.Send func
 
 Note: IDEs should recognize the types and auto-fill the sdk module hierarchy, and the corresponding fields for the request and response objects for each method: IntelliJ, VS, WebStorm, PhpStorm, etc.
 -->
-## withTransactions(() => {...})
+## with_transactions()
 
 _Wrap multiple messages in a single transaction._
 
 ```python
-sdk.db.WithTransactions([
+sdk.db.With_transactions([
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -225,10 +226,10 @@ Returns: MsgCreateResponse (empty object)
 
 | MsgCreateRequest | Description         | Type       |
 | :--------------- | :------------------ | ---------- |
-| creator          | Signer address      | string     |
-| uuid             | Database identifier | string     |
-| key              |                     | string     |
-| value            |                     | Uint8Array |
+| creator          | Signer address      | str        |
+| uuid             | Database identifier | str        |
+| key              |                     | str        |
+| value            |                     | bytes      |
 | metadata         |                     | Uint8Array |
 | lease            | Key-value life-span | Lease \*   |
 
