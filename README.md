@@ -1,6 +1,11 @@
+# Bluzelle python API
+
+![Build workflow](https://github.com/hhio618/bluzelle-py/actions/workflows/main.yml/badge.svg)
+[![GitHub license](https://img.shields.io/github/license/hhio618/bluzelle-py)](https://github.com/hhio618/bluzelle-py/blob/master/LICENSE)
+
 <a href="https://bluzelle.com/"><img src='https://raw.githubusercontent.com/bluzelle/api/master/source/images/Bluzelle%20-%20Logo%20-%20Big%20-%20Colour.png' alt="Bluzelle" style="width: 100%"/></a>
 
-**sdk-js** is a JavaScript library that can be used to access the Bluzelle database service.
+**Bluzelle-py** is a Python library that can be used to access the Bluzelle database service.
 
 # Setup
 The Python Library is not yet published on any package manager, To install and use follow the below instructions:
