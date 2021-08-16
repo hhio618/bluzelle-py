@@ -42,7 +42,7 @@ typing-extensions = { version = ">=3.7.4", python = "<3.8" }
 
 [tool.poetry.dev-dependencies]
 # Tests
-ward = "*"
+pytest = "*"
 coverage = { version = "*", extras = ["toml"] }
 
 # Tools
@@ -51,7 +51,6 @@ pre-commit = "*"
 bump2version = "*"
 python-dotenv = "*"
 ipdb = "*"
-pytest = "*"
 importlib-metadata = "*"
 isort = "==4.3.19"
 black = "==21.7b0"
@@ -64,10 +63,17 @@ get-proto-files = "./scripts/get_proto.sh"
 generate-proto-bindings =	"./scripts/generate_proto.sh"
 fix-proto-binding-imports =	"./scripts/fix_imports.sh"
 proto-bindings = ["get-proto-files", "generate-proto-bindings", "fix-proto-binding-imports"]
-test = "pytest --cov=bluzelle"
 typecheck = "mypy ."
 codestyle = "black --check --diff ."
-check = ["test", "typecheck", "codestyle"]
+check = ["typecheck", "codestyle"]
+
+[tool.pytest.ini_options]
+minversion = "2.0"
+python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
+python_classes = ["Test"]
+python_functions = ["test"]
+testpaths = ["tests"]
+xfail_strict = true
 
 [tool.black]
 line-length = 99
