@@ -1,7 +1,5 @@
 import abc
-from base64 import b64decode
 
-from google.protobuf.message import Message
 from grpc import Channel, UnaryUnaryMultiCallable
 
 from bluzelle.tendermint import Tendermint34Client
@@ -15,7 +13,8 @@ class Callable(UnaryUnaryMultiCallable):
         request_serializer,
         response_deserializer,
     ):
-        """Custom implementation of grpc UnaryUnaryMultiCallable object using Tendermint34Client.
+        """Custom implementation of grpc UnaryUnaryMultiCallable object using
+        Tendermint34Client.
 
         Args:
           tendermint34Client: A Tendermint34Client instance.
@@ -36,9 +35,7 @@ class Callable(UnaryUnaryMultiCallable):
         """Handles invokes the underlying RPC synchronously."""
         raise NotImplementedError()
 
-    def future(
-        self, request, timeout, metadata, credentials, wait_for_ready, compression
-    ):
+    def future(self, request, timeout, metadata, credentials, wait_for_ready, compression):
         return super().future(
             request,
             timeout=timeout,
@@ -48,9 +45,7 @@ class Callable(UnaryUnaryMultiCallable):
             compression=compression,
         )
 
-    def with_call(
-        self, request, timeout, metadata, credentials, wait_for_ready, compression
-    ):
+    def with_call(self, request, timeout, metadata, credentials, wait_for_ready, compression):
         return super().with_call(
             request,
             timeout=timeout,
@@ -62,8 +57,8 @@ class Callable(UnaryUnaryMultiCallable):
 
 
 class RpcChannel(Channel):
-    """ Base class for implementing A GRPC Channel using Tendermint34Client.
-    """
+    """Base class for implementing A GRPC Channel using Tendermint34Client."""
+
     def __init__(self, tendermint34Client: Tendermint34Client):
         self.tendermint34Client = tendermint34Client
 

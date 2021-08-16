@@ -1,22 +1,16 @@
 import collections
-import logging
-import os
-import os.path
 from io import BytesIO
 from math import ceil
+import os
+import os.path
 from pathlib import Path
 
-import colorlog
 from google.protobuf.message import Message
 from sha3 import keccak_256
 
-# from rlp.utils import decode_hex, encode_hex
-
 
 def encode_varint(number: int) -> bytes:
-    """
-    Encode varint into bytes
-    """
+    """Encode varint into bytes."""
     # Shift to int64
     number = number << 1
     buf = b""
@@ -32,9 +26,7 @@ def encode_varint(number: int) -> bytes:
 
 
 def decode_varint(stream: BytesIO) -> int:
-    """
-    Decode bytes into int
-    """
+    """Decode bytes into int."""
     shift = 0
     result = 0
     while True:
@@ -47,9 +39,7 @@ def decode_varint(stream: BytesIO) -> int:
 
 
 def _read_one(stream: BytesIO) -> int:
-    """
-    Read 1 byte, converting it into an int
-    """
+    """Read 1 byte, converting it into an int."""
     c = stream.read(1)
     if c == b"":
         raise EOFError("Unexpected EOF while reading bytes")
@@ -57,9 +47,7 @@ def _read_one(stream: BytesIO) -> int:
 
 
 def write_message(message: Message) -> bytes:
-    """
-    Write length prefixed protobuf message
-    """
+    """Write length prefixed protobuf message."""
     buffer = BytesIO(b"")
     bz = message.SerializeToString()
     buffer.write(encode_varint(len(bz)))
@@ -68,9 +56,7 @@ def write_message(message: Message) -> bytes:
 
 
 def read_messages(reader: BytesIO, message: Message) -> Message:
-    """
-    Return an interator over the messages found in the byte stream
-    """
+    """Return an interator over the messages found in the byte stream."""
     while True:
         try:
             length = decode_varint(reader) >> 1

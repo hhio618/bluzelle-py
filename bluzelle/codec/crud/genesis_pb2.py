@@ -6,6 +6,7 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -13,60 +14,72 @@ _sym_db = _symbol_database.Default()
 
 from bluzelle.codec.crud import CrudValue_pb2 as crud_dot_CrudValue__pb2
 
-
 DESCRIPTOR = _descriptor.FileDescriptor(
-  name='crud/genesis.proto',
-  package='bluzelle.curium.crud',
-  syntax='proto3',
-  serialized_options=b'Z\'github.com/bluzelle/curium/x/crud/types',
-  create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x12\x63rud/genesis.proto\x12\x14\x62luzelle.curium.crud\x1a\x14\x63rud/CrudValue.proto\"F\n\x0cGenesisState\x12\x36\n\rCrudValueList\x18\x01 \x03(\x0b\x32\x1f.bluzelle.curium.crud.CrudValueB)Z\'github.com/bluzelle/curium/x/crud/typesb\x06proto3'
-  ,
-  dependencies=[crud_dot_CrudValue__pb2.DESCRIPTOR,])
-
-
+    name="crud/genesis.proto",
+    package="bluzelle.curium.crud",
+    syntax="proto3",
+    serialized_options=b"Z'github.com/bluzelle/curium/x/crud/types",
+    create_key=_descriptor._internal_create_key,
+    serialized_pb=b"\n\x12\x63rud/genesis.proto\x12\x14\x62luzelle.curium.crud\x1a\x14\x63rud/CrudValue.proto\"F\n\x0cGenesisState\x12\x36\n\rCrudValueList\x18\x01 \x03(\x0b\x32\x1f.bluzelle.curium.crud.CrudValueB)Z'github.com/bluzelle/curium/x/crud/typesb\x06proto3",
+    dependencies=[
+        crud_dot_CrudValue__pb2.DESCRIPTOR,
+    ],
+)
 
 
 _GENESISSTATE = _descriptor.Descriptor(
-  name='GenesisState',
-  full_name='bluzelle.curium.crud.GenesisState',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='CrudValueList', full_name='bluzelle.curium.crud.GenesisState.CrudValueList', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=66,
-  serialized_end=136,
+    name="GenesisState",
+    full_name="bluzelle.curium.crud.GenesisState",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="CrudValueList",
+            full_name="bluzelle.curium.crud.GenesisState.CrudValueList",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=66,
+    serialized_end=136,
 )
 
-_GENESISSTATE.fields_by_name['CrudValueList'].message_type = crud_dot_CrudValue__pb2._CRUDVALUE
-DESCRIPTOR.message_types_by_name['GenesisState'] = _GENESISSTATE
+_GENESISSTATE.fields_by_name["CrudValueList"].message_type = crud_dot_CrudValue__pb2._CRUDVALUE
+DESCRIPTOR.message_types_by_name["GenesisState"] = _GENESISSTATE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-GenesisState = _reflection.GeneratedProtocolMessageType('GenesisState', (_message.Message,), {
-  'DESCRIPTOR' : _GENESISSTATE,
-  '__module__' : 'crud.genesis_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.GenesisState)
-  })
+GenesisState = _reflection.GeneratedProtocolMessageType(
+    "GenesisState",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _GENESISSTATE,
+        "__module__": "crud.genesis_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.GenesisState)
+    },
+)
 _sym_db.RegisterMessage(GenesisState)
 
 

@@ -6,118 +6,165 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
 
 
-
-
 DESCRIPTOR = _descriptor.FileDescriptor(
-  name='crud/Paging.proto',
-  package='bluzelle.curium.crud',
-  syntax='proto3',
-  serialized_options=b'Z\'github.com/bluzelle/curium/x/crud/types',
-  create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x11\x63rud/Paging.proto\x12\x14\x62luzelle.curium.crud\"0\n\rPagingRequest\x12\x10\n\x08startKey\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x04\"0\n\x0ePagingResponse\x12\x0f\n\x07nextKey\x18\x01 \x01(\t\x12\r\n\x05total\x18\x02 \x01(\x04\x42)Z\'github.com/bluzelle/curium/x/crud/typesb\x06proto3'
+    name="crud/Paging.proto",
+    package="bluzelle.curium.crud",
+    syntax="proto3",
+    serialized_options=b"Z'github.com/bluzelle/curium/x/crud/types",
+    create_key=_descriptor._internal_create_key,
+    serialized_pb=b'\n\x11\x63rud/Paging.proto\x12\x14\x62luzelle.curium.crud"0\n\rPagingRequest\x12\x10\n\x08startKey\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x04"0\n\x0ePagingResponse\x12\x0f\n\x07nextKey\x18\x01 \x01(\t\x12\r\n\x05total\x18\x02 \x01(\x04\x42)Z\'github.com/bluzelle/curium/x/crud/typesb\x06proto3',
 )
 
 
-
-
 _PAGINGREQUEST = _descriptor.Descriptor(
-  name='PagingRequest',
-  full_name='bluzelle.curium.crud.PagingRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='startKey', full_name='bluzelle.curium.crud.PagingRequest.startKey', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='limit', full_name='bluzelle.curium.crud.PagingRequest.limit', index=1,
-      number=2, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=43,
-  serialized_end=91,
+    name="PagingRequest",
+    full_name="bluzelle.curium.crud.PagingRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="startKey",
+            full_name="bluzelle.curium.crud.PagingRequest.startKey",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="limit",
+            full_name="bluzelle.curium.crud.PagingRequest.limit",
+            index=1,
+            number=2,
+            type=4,
+            cpp_type=4,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=43,
+    serialized_end=91,
 )
 
 
 _PAGINGRESPONSE = _descriptor.Descriptor(
-  name='PagingResponse',
-  full_name='bluzelle.curium.crud.PagingResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='nextKey', full_name='bluzelle.curium.crud.PagingResponse.nextKey', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='total', full_name='bluzelle.curium.crud.PagingResponse.total', index=1,
-      number=2, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=93,
-  serialized_end=141,
+    name="PagingResponse",
+    full_name="bluzelle.curium.crud.PagingResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="nextKey",
+            full_name="bluzelle.curium.crud.PagingResponse.nextKey",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="total",
+            full_name="bluzelle.curium.crud.PagingResponse.total",
+            index=1,
+            number=2,
+            type=4,
+            cpp_type=4,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=93,
+    serialized_end=141,
 )
 
-DESCRIPTOR.message_types_by_name['PagingRequest'] = _PAGINGREQUEST
-DESCRIPTOR.message_types_by_name['PagingResponse'] = _PAGINGRESPONSE
+DESCRIPTOR.message_types_by_name["PagingRequest"] = _PAGINGREQUEST
+DESCRIPTOR.message_types_by_name["PagingResponse"] = _PAGINGRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-PagingRequest = _reflection.GeneratedProtocolMessageType('PagingRequest', (_message.Message,), {
-  'DESCRIPTOR' : _PAGINGREQUEST,
-  '__module__' : 'crud.Paging_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.PagingRequest)
-  })
+PagingRequest = _reflection.GeneratedProtocolMessageType(
+    "PagingRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _PAGINGREQUEST,
+        "__module__": "crud.Paging_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.PagingRequest)
+    },
+)
 _sym_db.RegisterMessage(PagingRequest)
 
-PagingResponse = _reflection.GeneratedProtocolMessageType('PagingResponse', (_message.Message,), {
-  'DESCRIPTOR' : _PAGINGRESPONSE,
-  '__module__' : 'crud.Paging_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.PagingResponse)
-  })
+PagingResponse = _reflection.GeneratedProtocolMessageType(
+    "PagingResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _PAGINGRESPONSE,
+        "__module__": "crud.Paging_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.PagingResponse)
+    },
+)
 _sym_db.RegisterMessage(PagingResponse)
 
 

@@ -1,44 +1,40 @@
 import abc
-from typing import Any, List, Sequence
+from typing import Any
 
 import six
-from google.protobuf.message import Message
 
 from bluzelle.codec.cosmos.tx.signing.v1beta1.signing_pb2 import SignMode
 from bluzelle.codec.cosmos.tx.v1beta1.tx_pb2 import SignDoc, Tx
-
 from ._signature import SignerData
 
 
 class SignModeHandler(six.with_metaclass(abc.ABCMeta)):
-    """ SignModeHandler defines a interface to be implemented by types which
-    will handle SignMode's by generating sign bytes from a Tx and SignerData.
-    """
-    
+    """SignModeHandler defines a interface to be implemented by types which
+    will handle SignMode's by generating sign bytes from a Tx and
+    SignerData."""
+
     # mode is one of the modes supported by the rpc.
     mode: Any
 
-
     @abc.abstractmethod
     def get_sign_bytes(self, mode: Any, data: SignerData, tx: Tx):
-        """ get_sign_bytes returns the sign bytes for the provided SignMode,
-          SignerData and Tx, or an error.
-        
+        """get_sign_bytes returns the sign bytes for the provided SignMode,
+        SignerData and Tx, or an error.
+
         Args:
-          mode: provided SignMode for siging the transaction. 
+          mode: provided SignMode for signing the transaction.
           data: A :term:`SignarData` object contains the required signer data for
              calculating sign bytes
           tx: input raw transaction.
-        
-        Returns: the sign bytes for the raw transaction.
 
+        Returns: the sign bytes for the raw transaction.
         """
         raise NotImplementedError()
 
 
-
 class DirectSignModeHandler(SignModeHandler):
     """DirectSignModeHandler supports the SignMode.SIGN_MODE_DIRECT."""
+
     def get_mode(self):
         return SignMode.SIGN_MODE_DIRECT
 

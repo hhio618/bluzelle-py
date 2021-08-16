@@ -6,6 +6,7 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -13,168 +14,254 @@ _sym_db = _symbol_database.Default()
 
 from bluzelle.codec.crud import lease_pb2 as crud_dot_lease__pb2
 
-
 DESCRIPTOR = _descriptor.FileDescriptor(
-  name='crud/KeyValue.proto',
-  package='bluzelle.curium.crud',
-  syntax='proto3',
-  serialized_options=b'Z\'github.com/bluzelle/curium/x/crud/types',
-  create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x13\x63rud/KeyValue.proto\x12\x14\x62luzelle.curium.crud\x1a\x10\x63rud/lease.proto\"&\n\x08KeyValue\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c\"W\n\rKeyValueLease\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c\x12*\n\x05lease\x18\x03 \x01(\x0b\x32\x1b.bluzelle.curium.crud.Lease\"(\n\x08KeyLease\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x0f\n\x07seconds\x18\x02 \x01(\rB)Z\'github.com/bluzelle/curium/x/crud/typesb\x06proto3'
-  ,
-  dependencies=[crud_dot_lease__pb2.DESCRIPTOR,])
-
-
+    name="crud/KeyValue.proto",
+    package="bluzelle.curium.crud",
+    syntax="proto3",
+    serialized_options=b"Z'github.com/bluzelle/curium/x/crud/types",
+    create_key=_descriptor._internal_create_key,
+    serialized_pb=b'\n\x13\x63rud/KeyValue.proto\x12\x14\x62luzelle.curium.crud\x1a\x10\x63rud/lease.proto"&\n\x08KeyValue\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c"W\n\rKeyValueLease\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x0c\x12*\n\x05lease\x18\x03 \x01(\x0b\x32\x1b.bluzelle.curium.crud.Lease"(\n\x08KeyLease\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x0f\n\x07seconds\x18\x02 \x01(\rB)Z\'github.com/bluzelle/curium/x/crud/typesb\x06proto3',
+    dependencies=[
+        crud_dot_lease__pb2.DESCRIPTOR,
+    ],
+)
 
 
 _KEYVALUE = _descriptor.Descriptor(
-  name='KeyValue',
-  full_name='bluzelle.curium.crud.KeyValue',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='bluzelle.curium.crud.KeyValue.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='bluzelle.curium.crud.KeyValue.value', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=63,
-  serialized_end=101,
+    name="KeyValue",
+    full_name="bluzelle.curium.crud.KeyValue",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="bluzelle.curium.crud.KeyValue.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="bluzelle.curium.crud.KeyValue.value",
+            index=1,
+            number=2,
+            type=12,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"",
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=63,
+    serialized_end=101,
 )
 
 
 _KEYVALUELEASE = _descriptor.Descriptor(
-  name='KeyValueLease',
-  full_name='bluzelle.curium.crud.KeyValueLease',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='bluzelle.curium.crud.KeyValueLease.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='bluzelle.curium.crud.KeyValueLease.value', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='lease', full_name='bluzelle.curium.crud.KeyValueLease.lease', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=103,
-  serialized_end=190,
+    name="KeyValueLease",
+    full_name="bluzelle.curium.crud.KeyValueLease",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="bluzelle.curium.crud.KeyValueLease.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="bluzelle.curium.crud.KeyValueLease.value",
+            index=1,
+            number=2,
+            type=12,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"",
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="lease",
+            full_name="bluzelle.curium.crud.KeyValueLease.lease",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=103,
+    serialized_end=190,
 )
 
 
 _KEYLEASE = _descriptor.Descriptor(
-  name='KeyLease',
-  full_name='bluzelle.curium.crud.KeyLease',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='key', full_name='bluzelle.curium.crud.KeyLease.key', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='seconds', full_name='bluzelle.curium.crud.KeyLease.seconds', index=1,
-      number=2, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=192,
-  serialized_end=232,
+    name="KeyLease",
+    full_name="bluzelle.curium.crud.KeyLease",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="bluzelle.curium.crud.KeyLease.key",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="seconds",
+            full_name="bluzelle.curium.crud.KeyLease.seconds",
+            index=1,
+            number=2,
+            type=13,
+            cpp_type=3,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=192,
+    serialized_end=232,
 )
 
-_KEYVALUELEASE.fields_by_name['lease'].message_type = crud_dot_lease__pb2._LEASE
-DESCRIPTOR.message_types_by_name['KeyValue'] = _KEYVALUE
-DESCRIPTOR.message_types_by_name['KeyValueLease'] = _KEYVALUELEASE
-DESCRIPTOR.message_types_by_name['KeyLease'] = _KEYLEASE
+_KEYVALUELEASE.fields_by_name["lease"].message_type = crud_dot_lease__pb2._LEASE
+DESCRIPTOR.message_types_by_name["KeyValue"] = _KEYVALUE
+DESCRIPTOR.message_types_by_name["KeyValueLease"] = _KEYVALUELEASE
+DESCRIPTOR.message_types_by_name["KeyLease"] = _KEYLEASE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-KeyValue = _reflection.GeneratedProtocolMessageType('KeyValue', (_message.Message,), {
-  'DESCRIPTOR' : _KEYVALUE,
-  '__module__' : 'crud.KeyValue_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.KeyValue)
-  })
+KeyValue = _reflection.GeneratedProtocolMessageType(
+    "KeyValue",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _KEYVALUE,
+        "__module__": "crud.KeyValue_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.KeyValue)
+    },
+)
 _sym_db.RegisterMessage(KeyValue)
 
-KeyValueLease = _reflection.GeneratedProtocolMessageType('KeyValueLease', (_message.Message,), {
-  'DESCRIPTOR' : _KEYVALUELEASE,
-  '__module__' : 'crud.KeyValue_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.KeyValueLease)
-  })
+KeyValueLease = _reflection.GeneratedProtocolMessageType(
+    "KeyValueLease",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _KEYVALUELEASE,
+        "__module__": "crud.KeyValue_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.KeyValueLease)
+    },
+)
 _sym_db.RegisterMessage(KeyValueLease)
 
-KeyLease = _reflection.GeneratedProtocolMessageType('KeyLease', (_message.Message,), {
-  'DESCRIPTOR' : _KEYLEASE,
-  '__module__' : 'crud.KeyValue_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.KeyLease)
-  })
+KeyLease = _reflection.GeneratedProtocolMessageType(
+    "KeyLease",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _KEYLEASE,
+        "__module__": "crud.KeyValue_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.KeyLease)
+    },
+)
 _sym_db.RegisterMessage(KeyLease)
 
 

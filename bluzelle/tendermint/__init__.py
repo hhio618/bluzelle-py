@@ -1,1 +1,1 @@
-from bluzelle.tendermint.client import Tendermint34Client
+from .client import Tendermint34Client  # noqa: F401

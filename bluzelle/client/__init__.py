@@ -1,2 +1,2 @@
-from bluzelle.client.query import QueryClient
-from bluzelle.client.tx import TransactionClient
+from .query import QueryClient  # noqa: F401
+from .tx import TransactionClient  # noqa: F401

@@ -6,1104 +6,1633 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
 
 
-from bluzelle.codec.google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
-from bluzelle.codec.crud import Paging_pb2 as crud_dot_Paging__pb2
 from bluzelle.codec.crud import KeyValue_pb2 as crud_dot_KeyValue__pb2
-
+from bluzelle.codec.crud import Paging_pb2 as crud_dot_Paging__pb2
+from bluzelle.codec.google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 
 DESCRIPTOR = _descriptor.FileDescriptor(
-  name='crud/query.proto',
-  package='bluzelle.curium.crud',
-  syntax='proto3',
-  serialized_options=b'Z\'github.com/bluzelle/curium/x/crud/types',
-  create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x10\x63rud/query.proto\x12\x14\x62luzelle.curium.crud\x1a\x1cgoogle/api/annotations.proto\x1a\x11\x63rud/Paging.proto\x1a\x13\x63rud/KeyValue.proto\"-\n\x10QueryFileRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\"<\n\x11QueryFileResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x0b\n\x03key\x18\x03 \x01(\t\"^\n\x15QueryKeyValuesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x37\n\npagination\x18\x02 \x01(\x0b\x32#.bluzelle.curium.crud.PagingRequest\"\x85\x01\n\x16QueryKeyValuesResponse\x12\x31\n\tkeyValues\x18\x01 \x03(\x0b\x32\x1e.bluzelle.curium.crud.KeyValue\x12\x38\n\npagination\x18\x02 \x01(\x0b\x32$.bluzelle.curium.crud.PagingResponse\"-\n\x10QueryReadRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\"\"\n\x11QueryReadResponse\x12\r\n\x05value\x18\x01 \x01(\x0c\"Y\n\x10QueryKeysRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x37\n\npagination\x18\x02 \x01(\x0b\x32#.bluzelle.curium.crud.PagingRequest\"[\n\x11QueryKeysResponse\x12\x0c\n\x04keys\x18\x01 \x03(\t\x12\x38\n\npagination\x18\x02 \x01(\x0b\x32$.bluzelle.curium.crud.PagingResponse\"l\n\x12QueryMyKeysRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x37\n\npagination\x18\x03 \x01(\x0b\x32#.bluzelle.curium.crud.PagingRequest\"]\n\x13QueryMyKeysResponse\x12\x0c\n\x04keys\x18\x01 \x03(\t\x12\x38\n\npagination\x18\x02 \x01(\x0b\x32$.bluzelle.curium.crud.PagingResponse\"!\n\x11QueryCountRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"1\n\x12QueryCountResponse\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\r\",\n\x0fQueryHasRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\"\x1f\n\x10QueryHasResponse\x12\x0b\n\x03has\x18\x01 \x01(\x08\"q\n\x12QuerySearchRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x14\n\x0csearchString\x18\x02 \x01(\t\x12\x37\n\npagination\x18\x03 \x01(\x0b\x32#.bluzelle.curium.crud.PagingRequest\"\x82\x01\n\x13QuerySearchResponse\x12\x31\n\tkeyValues\x18\x01 \x03(\x0b\x32\x1e.bluzelle.curium.crud.KeyValue\x12\x38\n\npagination\x18\x02 \x01(\x0b\x32$.bluzelle.curium.crud.PagingResponse\"1\n\x14QueryGetLeaseRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\"C\n\x15QueryGetLeaseResponse\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\x12\x0f\n\x07seconds\x18\x03 \x01(\r\";\n\x1eQueryGetNShortestLeasesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03num\x18\x02 \x01(\r\"b\n\x1fQueryGetNShortestLeasesResponse\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x31\n\tkeyLeases\x18\x02 \x03(\x0b\x32\x1e.bluzelle.curium.crud.KeyLease2\xa5\x0b\n\x05Query\x12\x88\x01\n\x04Read\x12&.bluzelle.curium.crud.QueryReadRequest\x1a\'.bluzelle.curium.crud.QueryReadResponse\"/\x82\xd3\xe4\x93\x02)\x12\'/bluzelle/curium/crud/Read/{uuid}/{key}\x12\x82\x01\n\x04Keys\x12&.bluzelle.curium.crud.QueryKeysRequest\x1a\'.bluzelle.curium.crud.QueryKeysResponse\")\x82\xd3\xe4\x93\x02#\x12!/bluzelle/curium/crud/Keys/{uuid}\x12\x8d\x01\n\x06MyKeys\x12(.bluzelle.curium.crud.QueryMyKeysRequest\x1a).bluzelle.curium.crud.QueryMyKeysResponse\".\x82\xd3\xe4\x93\x02(\x12&/bluzelle/curium/crud/MyKeys/{address}\x12\x86\x01\n\x05\x43ount\x12\'.bluzelle.curium.crud.QueryCountRequest\x1a(.bluzelle.curium.crud.QueryCountResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/bluzelle/curium/crud/Count/{uuid}\x12\x84\x01\n\x03Has\x12%.bluzelle.curium.crud.QueryHasRequest\x1a&.bluzelle.curium.crud.QueryHasResponse\".\x82\xd3\xe4\x93\x02(\x12&/bluzelle/curium/crud/Has/{uuid}/{key}\x12\x99\x01\n\x06Search\x12(.bluzelle.curium.crud.QuerySearchRequest\x1a).bluzelle.curium.crud.QuerySearchResponse\":\x82\xd3\xe4\x93\x02\x34\x12\x32/bluzelle/curium/crud/search/{uuid}/{searchString}\x12\xc0\x01\n\x12GetNShortestLeases\x12\x34.bluzelle.curium.crud.QueryGetNShortestLeasesRequest\x1a\x35.bluzelle.curium.crud.QueryGetNShortestLeasesResponse\"=\x82\xd3\xe4\x93\x02\x37\x12\x35/bluzelle/curium/crud/GetNShortestLeases/{uuid}/{num}\x12\x98\x01\n\x08GetLease\x12*.bluzelle.curium.crud.QueryGetLeaseRequest\x1a+.bluzelle.curium.crud.QueryGetLeaseResponse\"3\x82\xd3\xe4\x93\x02-\x12+/bluzelle/curium/crud/GetLease/{uuid}/{key}\x12\x96\x01\n\tKeyValues\x12+.bluzelle.curium.crud.QueryKeyValuesRequest\x1a,.bluzelle.curium.crud.QueryKeyValuesResponse\".\x82\xd3\xe4\x93\x02(\x12&/bluzelle/curium/crud/KeyValues/{uuid}\x12Y\n\x04\x46ile\x12&.bluzelle.curium.crud.QueryFileRequest\x1a\'.bluzelle.curium.crud.QueryFileResponse\"\x00\x42)Z\'github.com/bluzelle/curium/x/crud/typesb\x06proto3'
-  ,
-  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,crud_dot_Paging__pb2.DESCRIPTOR,crud_dot_KeyValue__pb2.DESCRIPTOR,])
-
-
+    name="crud/query.proto",
+    package="bluzelle.curium.crud",
+    syntax="proto3",
+    serialized_options=b"Z'github.com/bluzelle/curium/x/crud/types",
+    create_key=_descriptor._internal_create_key,
+    serialized_pb=b'\n\x10\x63rud/query.proto\x12\x14\x62luzelle.curium.crud\x1a\x1cgoogle/api/annotations.proto\x1a\x11\x63rud/Paging.proto\x1a\x13\x63rud/KeyValue.proto"-\n\x10QueryFileRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t"<\n\x11QueryFileResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x0b\n\x03key\x18\x03 \x01(\t"^\n\x15QueryKeyValuesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x37\n\npagination\x18\x02 \x01(\x0b\x32#.bluzelle.curium.crud.PagingRequest"\x85\x01\n\x16QueryKeyValuesResponse\x12\x31\n\tkeyValues\x18\x01 \x03(\x0b\x32\x1e.bluzelle.curium.crud.KeyValue\x12\x38\n\npagination\x18\x02 \x01(\x0b\x32$.bluzelle.curium.crud.PagingResponse"-\n\x10QueryReadRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t""\n\x11QueryReadResponse\x12\r\n\x05value\x18\x01 \x01(\x0c"Y\n\x10QueryKeysRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x37\n\npagination\x18\x02 \x01(\x0b\x32#.bluzelle.curium.crud.PagingRequest"[\n\x11QueryKeysResponse\x12\x0c\n\x04keys\x18\x01 \x03(\t\x12\x38\n\npagination\x18\x02 \x01(\x0b\x32$.bluzelle.curium.crud.PagingResponse"l\n\x12QueryMyKeysRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x37\n\npagination\x18\x03 \x01(\x0b\x32#.bluzelle.curium.crud.PagingRequest"]\n\x13QueryMyKeysResponse\x12\x0c\n\x04keys\x18\x01 \x03(\t\x12\x38\n\npagination\x18\x02 \x01(\x0b\x32$.bluzelle.curium.crud.PagingResponse"!\n\x11QueryCountRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t"1\n\x12QueryCountResponse\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\r\n\x05\x63ount\x18\x02 \x01(\r",\n\x0fQueryHasRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t"\x1f\n\x10QueryHasResponse\x12\x0b\n\x03has\x18\x01 \x01(\x08"q\n\x12QuerySearchRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x14\n\x0csearchString\x18\x02 \x01(\t\x12\x37\n\npagination\x18\x03 \x01(\x0b\x32#.bluzelle.curium.crud.PagingRequest"\x82\x01\n\x13QuerySearchResponse\x12\x31\n\tkeyValues\x18\x01 \x03(\x0b\x32\x1e.bluzelle.curium.crud.KeyValue\x12\x38\n\npagination\x18\x02 \x01(\x0b\x32$.bluzelle.curium.crud.PagingResponse"1\n\x14QueryGetLeaseRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t"C\n\x15QueryGetLeaseResponse\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\x12\x0f\n\x07seconds\x18\x03 \x01(\r";\n\x1eQueryGetNShortestLeasesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0b\n\x03num\x18\x02 \x01(\r"b\n\x1fQueryGetNShortestLeasesResponse\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x31\n\tkeyLeases\x18\x02 \x03(\x0b\x32\x1e.bluzelle.curium.crud.KeyLease2\xa5\x0b\n\x05Query\x12\x88\x01\n\x04Read\x12&.bluzelle.curium.crud.QueryReadRequest\x1a\'.bluzelle.curium.crud.QueryReadResponse"/\x82\xd3\xe4\x93\x02)\x12\'/bluzelle/curium/crud/Read/{uuid}/{key}\x12\x82\x01\n\x04Keys\x12&.bluzelle.curium.crud.QueryKeysRequest\x1a\'.bluzelle.curium.crud.QueryKeysResponse")\x82\xd3\xe4\x93\x02#\x12!/bluzelle/curium/crud/Keys/{uuid}\x12\x8d\x01\n\x06MyKeys\x12(.bluzelle.curium.crud.QueryMyKeysRequest\x1a).bluzelle.curium.crud.QueryMyKeysResponse".\x82\xd3\xe4\x93\x02(\x12&/bluzelle/curium/crud/MyKeys/{address}\x12\x86\x01\n\x05\x43ount\x12\'.bluzelle.curium.crud.QueryCountRequest\x1a(.bluzelle.curium.crud.QueryCountResponse"*\x82\xd3\xe4\x93\x02$\x12"/bluzelle/curium/crud/Count/{uuid}\x12\x84\x01\n\x03Has\x12%.bluzelle.curium.crud.QueryHasRequest\x1a&.bluzelle.curium.crud.QueryHasResponse".\x82\xd3\xe4\x93\x02(\x12&/bluzelle/curium/crud/Has/{uuid}/{key}\x12\x99\x01\n\x06Search\x12(.bluzelle.curium.crud.QuerySearchRequest\x1a).bluzelle.curium.crud.QuerySearchResponse":\x82\xd3\xe4\x93\x02\x34\x12\x32/bluzelle/curium/crud/search/{uuid}/{searchString}\x12\xc0\x01\n\x12GetNShortestLeases\x12\x34.bluzelle.curium.crud.QueryGetNShortestLeasesRequest\x1a\x35.bluzelle.curium.crud.QueryGetNShortestLeasesResponse"=\x82\xd3\xe4\x93\x02\x37\x12\x35/bluzelle/curium/crud/GetNShortestLeases/{uuid}/{num}\x12\x98\x01\n\x08GetLease\x12*.bluzelle.curium.crud.QueryGetLeaseRequest\x1a+.bluzelle.curium.crud.QueryGetLeaseResponse"3\x82\xd3\xe4\x93\x02-\x12+/bluzelle/curium/crud/GetLease/{uuid}/{key}\x12\x96\x01\n\tKeyValues\x12+.bluzelle.curium.crud.QueryKeyValuesRequest\x1a,.bluzelle.curium.crud.QueryKeyValuesResponse".\x82\xd3\xe4\x93\x02(\x12&/bluzelle/curium/crud/KeyValues/{uuid}\x12Y\n\x04\x46ile\x12&.bluzelle.curium.crud.QueryFileRequest\x1a\'.bluzelle.curium.crud.QueryFileResponse"\x00\x42)Z\'github.com/bluzelle/curium/x/crud/typesb\x06proto3',
+    dependencies=[
+        google_dot_api_dot_annotations__pb2.DESCRIPTOR,
+        crud_dot_Paging__pb2.DESCRIPTOR,
+        crud_dot_KeyValue__pb2.DESCRIPTOR,
+    ],
+)
 
 
 _QUERYFILEREQUEST = _descriptor.Descriptor(
-  name='QueryFileRequest',
-  full_name='bluzelle.curium.crud.QueryFileRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryFileRequest.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='key', full_name='bluzelle.curium.crud.QueryFileRequest.key', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=112,
-  serialized_end=157,
+    name="QueryFileRequest",
+    full_name="bluzelle.curium.crud.QueryFileRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryFileRequest.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="bluzelle.curium.crud.QueryFileRequest.key",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=112,
+    serialized_end=157,
 )
 
 
 _QUERYFILERESPONSE = _descriptor.Descriptor(
-  name='QueryFileResponse',
-  full_name='bluzelle.curium.crud.QueryFileResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='data', full_name='bluzelle.curium.crud.QueryFileResponse.data', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryFileResponse.uuid', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='key', full_name='bluzelle.curium.crud.QueryFileResponse.key', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=159,
-  serialized_end=219,
+    name="QueryFileResponse",
+    full_name="bluzelle.curium.crud.QueryFileResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="data",
+            full_name="bluzelle.curium.crud.QueryFileResponse.data",
+            index=0,
+            number=1,
+            type=12,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"",
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryFileResponse.uuid",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="bluzelle.curium.crud.QueryFileResponse.key",
+            index=2,
+            number=3,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=159,
+    serialized_end=219,
 )
 
 
 _QUERYKEYVALUESREQUEST = _descriptor.Descriptor(
-  name='QueryKeyValuesRequest',
-  full_name='bluzelle.curium.crud.QueryKeyValuesRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryKeyValuesRequest.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pagination', full_name='bluzelle.curium.crud.QueryKeyValuesRequest.pagination', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=221,
-  serialized_end=315,
+    name="QueryKeyValuesRequest",
+    full_name="bluzelle.curium.crud.QueryKeyValuesRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryKeyValuesRequest.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="pagination",
+            full_name="bluzelle.curium.crud.QueryKeyValuesRequest.pagination",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=221,
+    serialized_end=315,
 )
 
 
 _QUERYKEYVALUESRESPONSE = _descriptor.Descriptor(
-  name='QueryKeyValuesResponse',
-  full_name='bluzelle.curium.crud.QueryKeyValuesResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='keyValues', full_name='bluzelle.curium.crud.QueryKeyValuesResponse.keyValues', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pagination', full_name='bluzelle.curium.crud.QueryKeyValuesResponse.pagination', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=318,
-  serialized_end=451,
+    name="QueryKeyValuesResponse",
+    full_name="bluzelle.curium.crud.QueryKeyValuesResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="keyValues",
+            full_name="bluzelle.curium.crud.QueryKeyValuesResponse.keyValues",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="pagination",
+            full_name="bluzelle.curium.crud.QueryKeyValuesResponse.pagination",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=318,
+    serialized_end=451,
 )
 
 
 _QUERYREADREQUEST = _descriptor.Descriptor(
-  name='QueryReadRequest',
-  full_name='bluzelle.curium.crud.QueryReadRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryReadRequest.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='key', full_name='bluzelle.curium.crud.QueryReadRequest.key', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=453,
-  serialized_end=498,
+    name="QueryReadRequest",
+    full_name="bluzelle.curium.crud.QueryReadRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryReadRequest.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="bluzelle.curium.crud.QueryReadRequest.key",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=453,
+    serialized_end=498,
 )
 
 
 _QUERYREADRESPONSE = _descriptor.Descriptor(
-  name='QueryReadResponse',
-  full_name='bluzelle.curium.crud.QueryReadResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='value', full_name='bluzelle.curium.crud.QueryReadResponse.value', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=500,
-  serialized_end=534,
+    name="QueryReadResponse",
+    full_name="bluzelle.curium.crud.QueryReadResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="value",
+            full_name="bluzelle.curium.crud.QueryReadResponse.value",
+            index=0,
+            number=1,
+            type=12,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"",
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=500,
+    serialized_end=534,
 )
 
 
 _QUERYKEYSREQUEST = _descriptor.Descriptor(
-  name='QueryKeysRequest',
-  full_name='bluzelle.curium.crud.QueryKeysRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryKeysRequest.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pagination', full_name='bluzelle.curium.crud.QueryKeysRequest.pagination', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=536,
-  serialized_end=625,
+    name="QueryKeysRequest",
+    full_name="bluzelle.curium.crud.QueryKeysRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryKeysRequest.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="pagination",
+            full_name="bluzelle.curium.crud.QueryKeysRequest.pagination",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=536,
+    serialized_end=625,
 )
 
 
 _QUERYKEYSRESPONSE = _descriptor.Descriptor(
-  name='QueryKeysResponse',
-  full_name='bluzelle.curium.crud.QueryKeysResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='keys', full_name='bluzelle.curium.crud.QueryKeysResponse.keys', index=0,
-      number=1, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pagination', full_name='bluzelle.curium.crud.QueryKeysResponse.pagination', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=627,
-  serialized_end=718,
+    name="QueryKeysResponse",
+    full_name="bluzelle.curium.crud.QueryKeysResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="keys",
+            full_name="bluzelle.curium.crud.QueryKeysResponse.keys",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="pagination",
+            full_name="bluzelle.curium.crud.QueryKeysResponse.pagination",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=627,
+    serialized_end=718,
 )
 
 
 _QUERYMYKEYSREQUEST = _descriptor.Descriptor(
-  name='QueryMyKeysRequest',
-  full_name='bluzelle.curium.crud.QueryMyKeysRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='address', full_name='bluzelle.curium.crud.QueryMyKeysRequest.address', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryMyKeysRequest.uuid', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pagination', full_name='bluzelle.curium.crud.QueryMyKeysRequest.pagination', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=720,
-  serialized_end=828,
+    name="QueryMyKeysRequest",
+    full_name="bluzelle.curium.crud.QueryMyKeysRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="address",
+            full_name="bluzelle.curium.crud.QueryMyKeysRequest.address",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryMyKeysRequest.uuid",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="pagination",
+            full_name="bluzelle.curium.crud.QueryMyKeysRequest.pagination",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=720,
+    serialized_end=828,
 )
 
 
 _QUERYMYKEYSRESPONSE = _descriptor.Descriptor(
-  name='QueryMyKeysResponse',
-  full_name='bluzelle.curium.crud.QueryMyKeysResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='keys', full_name='bluzelle.curium.crud.QueryMyKeysResponse.keys', index=0,
-      number=1, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pagination', full_name='bluzelle.curium.crud.QueryMyKeysResponse.pagination', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=830,
-  serialized_end=923,
+    name="QueryMyKeysResponse",
+    full_name="bluzelle.curium.crud.QueryMyKeysResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="keys",
+            full_name="bluzelle.curium.crud.QueryMyKeysResponse.keys",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="pagination",
+            full_name="bluzelle.curium.crud.QueryMyKeysResponse.pagination",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=830,
+    serialized_end=923,
 )
 
 
 _QUERYCOUNTREQUEST = _descriptor.Descriptor(
-  name='QueryCountRequest',
-  full_name='bluzelle.curium.crud.QueryCountRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryCountRequest.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=925,
-  serialized_end=958,
+    name="QueryCountRequest",
+    full_name="bluzelle.curium.crud.QueryCountRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryCountRequest.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=925,
+    serialized_end=958,
 )
 
 
 _QUERYCOUNTRESPONSE = _descriptor.Descriptor(
-  name='QueryCountResponse',
-  full_name='bluzelle.curium.crud.QueryCountResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryCountResponse.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='count', full_name='bluzelle.curium.crud.QueryCountResponse.count', index=1,
-      number=2, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=960,
-  serialized_end=1009,
+    name="QueryCountResponse",
+    full_name="bluzelle.curium.crud.QueryCountResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryCountResponse.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="count",
+            full_name="bluzelle.curium.crud.QueryCountResponse.count",
+            index=1,
+            number=2,
+            type=13,
+            cpp_type=3,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=960,
+    serialized_end=1009,
 )
 
 
 _QUERYHASREQUEST = _descriptor.Descriptor(
-  name='QueryHasRequest',
-  full_name='bluzelle.curium.crud.QueryHasRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryHasRequest.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='key', full_name='bluzelle.curium.crud.QueryHasRequest.key', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1011,
-  serialized_end=1055,
+    name="QueryHasRequest",
+    full_name="bluzelle.curium.crud.QueryHasRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryHasRequest.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="bluzelle.curium.crud.QueryHasRequest.key",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1011,
+    serialized_end=1055,
 )
 
 
 _QUERYHASRESPONSE = _descriptor.Descriptor(
-  name='QueryHasResponse',
-  full_name='bluzelle.curium.crud.QueryHasResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='has', full_name='bluzelle.curium.crud.QueryHasResponse.has', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1057,
-  serialized_end=1088,
+    name="QueryHasResponse",
+    full_name="bluzelle.curium.crud.QueryHasResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="has",
+            full_name="bluzelle.curium.crud.QueryHasResponse.has",
+            index=0,
+            number=1,
+            type=8,
+            cpp_type=7,
+            label=1,
+            has_default_value=False,
+            default_value=False,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1057,
+    serialized_end=1088,
 )
 
 
 _QUERYSEARCHREQUEST = _descriptor.Descriptor(
-  name='QuerySearchRequest',
-  full_name='bluzelle.curium.crud.QuerySearchRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QuerySearchRequest.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='searchString', full_name='bluzelle.curium.crud.QuerySearchRequest.searchString', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pagination', full_name='bluzelle.curium.crud.QuerySearchRequest.pagination', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1090,
-  serialized_end=1203,
+    name="QuerySearchRequest",
+    full_name="bluzelle.curium.crud.QuerySearchRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QuerySearchRequest.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="searchString",
+            full_name="bluzelle.curium.crud.QuerySearchRequest.searchString",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="pagination",
+            full_name="bluzelle.curium.crud.QuerySearchRequest.pagination",
+            index=2,
+            number=3,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1090,
+    serialized_end=1203,
 )
 
 
 _QUERYSEARCHRESPONSE = _descriptor.Descriptor(
-  name='QuerySearchResponse',
-  full_name='bluzelle.curium.crud.QuerySearchResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='keyValues', full_name='bluzelle.curium.crud.QuerySearchResponse.keyValues', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='pagination', full_name='bluzelle.curium.crud.QuerySearchResponse.pagination', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1206,
-  serialized_end=1336,
+    name="QuerySearchResponse",
+    full_name="bluzelle.curium.crud.QuerySearchResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="keyValues",
+            full_name="bluzelle.curium.crud.QuerySearchResponse.keyValues",
+            index=0,
+            number=1,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="pagination",
+            full_name="bluzelle.curium.crud.QuerySearchResponse.pagination",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=1,
+            has_default_value=False,
+            default_value=None,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1206,
+    serialized_end=1336,
 )
 
 
 _QUERYGETLEASEREQUEST = _descriptor.Descriptor(
-  name='QueryGetLeaseRequest',
-  full_name='bluzelle.curium.crud.QueryGetLeaseRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryGetLeaseRequest.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='key', full_name='bluzelle.curium.crud.QueryGetLeaseRequest.key', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1338,
-  serialized_end=1387,
+    name="QueryGetLeaseRequest",
+    full_name="bluzelle.curium.crud.QueryGetLeaseRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryGetLeaseRequest.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="bluzelle.curium.crud.QueryGetLeaseRequest.key",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1338,
+    serialized_end=1387,
 )
 
 
 _QUERYGETLEASERESPONSE = _descriptor.Descriptor(
-  name='QueryGetLeaseResponse',
-  full_name='bluzelle.curium.crud.QueryGetLeaseResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryGetLeaseResponse.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='key', full_name='bluzelle.curium.crud.QueryGetLeaseResponse.key', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='seconds', full_name='bluzelle.curium.crud.QueryGetLeaseResponse.seconds', index=2,
-      number=3, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1389,
-  serialized_end=1456,
+    name="QueryGetLeaseResponse",
+    full_name="bluzelle.curium.crud.QueryGetLeaseResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryGetLeaseResponse.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="key",
+            full_name="bluzelle.curium.crud.QueryGetLeaseResponse.key",
+            index=1,
+            number=2,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="seconds",
+            full_name="bluzelle.curium.crud.QueryGetLeaseResponse.seconds",
+            index=2,
+            number=3,
+            type=13,
+            cpp_type=3,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1389,
+    serialized_end=1456,
 )
 
 
 _QUERYGETNSHORTESTLEASESREQUEST = _descriptor.Descriptor(
-  name='QueryGetNShortestLeasesRequest',
-  full_name='bluzelle.curium.crud.QueryGetNShortestLeasesRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryGetNShortestLeasesRequest.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='num', full_name='bluzelle.curium.crud.QueryGetNShortestLeasesRequest.num', index=1,
-      number=2, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1458,
-  serialized_end=1517,
+    name="QueryGetNShortestLeasesRequest",
+    full_name="bluzelle.curium.crud.QueryGetNShortestLeasesRequest",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryGetNShortestLeasesRequest.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="num",
+            full_name="bluzelle.curium.crud.QueryGetNShortestLeasesRequest.num",
+            index=1,
+            number=2,
+            type=13,
+            cpp_type=3,
+            label=1,
+            has_default_value=False,
+            default_value=0,
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1458,
+    serialized_end=1517,
 )
 
 
 _QUERYGETNSHORTESTLEASESRESPONSE = _descriptor.Descriptor(
-  name='QueryGetNShortestLeasesResponse',
-  full_name='bluzelle.curium.crud.QueryGetNShortestLeasesResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='bluzelle.curium.crud.QueryGetNShortestLeasesResponse.uuid', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='keyLeases', full_name='bluzelle.curium.crud.QueryGetNShortestLeasesResponse.keyLeases', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1519,
-  serialized_end=1617,
+    name="QueryGetNShortestLeasesResponse",
+    full_name="bluzelle.curium.crud.QueryGetNShortestLeasesResponse",
+    filename=None,
+    file=DESCRIPTOR,
+    containing_type=None,
+    create_key=_descriptor._internal_create_key,
+    fields=[
+        _descriptor.FieldDescriptor(
+            name="uuid",
+            full_name="bluzelle.curium.crud.QueryGetNShortestLeasesResponse.uuid",
+            index=0,
+            number=1,
+            type=9,
+            cpp_type=9,
+            label=1,
+            has_default_value=False,
+            default_value=b"".decode("utf-8"),
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="keyLeases",
+            full_name="bluzelle.curium.crud.QueryGetNShortestLeasesResponse.keyLeases",
+            index=1,
+            number=2,
+            type=11,
+            cpp_type=10,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+    extensions=[],
+    nested_types=[],
+    enum_types=[],
+    serialized_options=None,
+    is_extendable=False,
+    syntax="proto3",
+    extension_ranges=[],
+    oneofs=[],
+    serialized_start=1519,
+    serialized_end=1617,
 )
 
-_QUERYKEYVALUESREQUEST.fields_by_name['pagination'].message_type = crud_dot_Paging__pb2._PAGINGREQUEST
-_QUERYKEYVALUESRESPONSE.fields_by_name['keyValues'].message_type = crud_dot_KeyValue__pb2._KEYVALUE
-_QUERYKEYVALUESRESPONSE.fields_by_name['pagination'].message_type = crud_dot_Paging__pb2._PAGINGRESPONSE
-_QUERYKEYSREQUEST.fields_by_name['pagination'].message_type = crud_dot_Paging__pb2._PAGINGREQUEST
-_QUERYKEYSRESPONSE.fields_by_name['pagination'].message_type = crud_dot_Paging__pb2._PAGINGRESPONSE
-_QUERYMYKEYSREQUEST.fields_by_name['pagination'].message_type = crud_dot_Paging__pb2._PAGINGREQUEST
-_QUERYMYKEYSRESPONSE.fields_by_name['pagination'].message_type = crud_dot_Paging__pb2._PAGINGRESPONSE
-_QUERYSEARCHREQUEST.fields_by_name['pagination'].message_type = crud_dot_Paging__pb2._PAGINGREQUEST
-_QUERYSEARCHRESPONSE.fields_by_name['keyValues'].message_type = crud_dot_KeyValue__pb2._KEYVALUE
-_QUERYSEARCHRESPONSE.fields_by_name['pagination'].message_type = crud_dot_Paging__pb2._PAGINGRESPONSE
-_QUERYGETNSHORTESTLEASESRESPONSE.fields_by_name['keyLeases'].message_type = crud_dot_KeyValue__pb2._KEYLEASE
-DESCRIPTOR.message_types_by_name['QueryFileRequest'] = _QUERYFILEREQUEST
-DESCRIPTOR.message_types_by_name['QueryFileResponse'] = _QUERYFILERESPONSE
-DESCRIPTOR.message_types_by_name['QueryKeyValuesRequest'] = _QUERYKEYVALUESREQUEST
-DESCRIPTOR.message_types_by_name['QueryKeyValuesResponse'] = _QUERYKEYVALUESRESPONSE
-DESCRIPTOR.message_types_by_name['QueryReadRequest'] = _QUERYREADREQUEST
-DESCRIPTOR.message_types_by_name['QueryReadResponse'] = _QUERYREADRESPONSE
-DESCRIPTOR.message_types_by_name['QueryKeysRequest'] = _QUERYKEYSREQUEST
-DESCRIPTOR.message_types_by_name['QueryKeysResponse'] = _QUERYKEYSRESPONSE
-DESCRIPTOR.message_types_by_name['QueryMyKeysRequest'] = _QUERYMYKEYSREQUEST
-DESCRIPTOR.message_types_by_name['QueryMyKeysResponse'] = _QUERYMYKEYSRESPONSE
-DESCRIPTOR.message_types_by_name['QueryCountRequest'] = _QUERYCOUNTREQUEST
-DESCRIPTOR.message_types_by_name['QueryCountResponse'] = _QUERYCOUNTRESPONSE
-DESCRIPTOR.message_types_by_name['QueryHasRequest'] = _QUERYHASREQUEST
-DESCRIPTOR.message_types_by_name['QueryHasResponse'] = _QUERYHASRESPONSE
-DESCRIPTOR.message_types_by_name['QuerySearchRequest'] = _QUERYSEARCHREQUEST
-DESCRIPTOR.message_types_by_name['QuerySearchResponse'] = _QUERYSEARCHRESPONSE
-DESCRIPTOR.message_types_by_name['QueryGetLeaseRequest'] = _QUERYGETLEASEREQUEST
-DESCRIPTOR.message_types_by_name['QueryGetLeaseResponse'] = _QUERYGETLEASERESPONSE
-DESCRIPTOR.message_types_by_name['QueryGetNShortestLeasesRequest'] = _QUERYGETNSHORTESTLEASESREQUEST
-DESCRIPTOR.message_types_by_name['QueryGetNShortestLeasesResponse'] = _QUERYGETNSHORTESTLEASESRESPONSE
+_QUERYKEYVALUESREQUEST.fields_by_name[
+    "pagination"
+].message_type = crud_dot_Paging__pb2._PAGINGREQUEST
+_QUERYKEYVALUESRESPONSE.fields_by_name["keyValues"].message_type = crud_dot_KeyValue__pb2._KEYVALUE
+_QUERYKEYVALUESRESPONSE.fields_by_name[
+    "pagination"
+].message_type = crud_dot_Paging__pb2._PAGINGRESPONSE
+_QUERYKEYSREQUEST.fields_by_name["pagination"].message_type = crud_dot_Paging__pb2._PAGINGREQUEST
+_QUERYKEYSRESPONSE.fields_by_name["pagination"].message_type = crud_dot_Paging__pb2._PAGINGRESPONSE
+_QUERYMYKEYSREQUEST.fields_by_name["pagination"].message_type = crud_dot_Paging__pb2._PAGINGREQUEST
+_QUERYMYKEYSRESPONSE.fields_by_name[
+    "pagination"
+].message_type = crud_dot_Paging__pb2._PAGINGRESPONSE
+_QUERYSEARCHREQUEST.fields_by_name["pagination"].message_type = crud_dot_Paging__pb2._PAGINGREQUEST
+_QUERYSEARCHRESPONSE.fields_by_name["keyValues"].message_type = crud_dot_KeyValue__pb2._KEYVALUE
+_QUERYSEARCHRESPONSE.fields_by_name[
+    "pagination"
+].message_type = crud_dot_Paging__pb2._PAGINGRESPONSE
+_QUERYGETNSHORTESTLEASESRESPONSE.fields_by_name[
+    "keyLeases"
+].message_type = crud_dot_KeyValue__pb2._KEYLEASE
+DESCRIPTOR.message_types_by_name["QueryFileRequest"] = _QUERYFILEREQUEST
+DESCRIPTOR.message_types_by_name["QueryFileResponse"] = _QUERYFILERESPONSE
+DESCRIPTOR.message_types_by_name["QueryKeyValuesRequest"] = _QUERYKEYVALUESREQUEST
+DESCRIPTOR.message_types_by_name["QueryKeyValuesResponse"] = _QUERYKEYVALUESRESPONSE
+DESCRIPTOR.message_types_by_name["QueryReadRequest"] = _QUERYREADREQUEST
+DESCRIPTOR.message_types_by_name["QueryReadResponse"] = _QUERYREADRESPONSE
+DESCRIPTOR.message_types_by_name["QueryKeysRequest"] = _QUERYKEYSREQUEST
+DESCRIPTOR.message_types_by_name["QueryKeysResponse"] = _QUERYKEYSRESPONSE
+DESCRIPTOR.message_types_by_name["QueryMyKeysRequest"] = _QUERYMYKEYSREQUEST
+DESCRIPTOR.message_types_by_name["QueryMyKeysResponse"] = _QUERYMYKEYSRESPONSE
+DESCRIPTOR.message_types_by_name["QueryCountRequest"] = _QUERYCOUNTREQUEST
+DESCRIPTOR.message_types_by_name["QueryCountResponse"] = _QUERYCOUNTRESPONSE
+DESCRIPTOR.message_types_by_name["QueryHasRequest"] = _QUERYHASREQUEST
+DESCRIPTOR.message_types_by_name["QueryHasResponse"] = _QUERYHASRESPONSE
+DESCRIPTOR.message_types_by_name["QuerySearchRequest"] = _QUERYSEARCHREQUEST
+DESCRIPTOR.message_types_by_name["QuerySearchResponse"] = _QUERYSEARCHRESPONSE
+DESCRIPTOR.message_types_by_name["QueryGetLeaseRequest"] = _QUERYGETLEASEREQUEST
+DESCRIPTOR.message_types_by_name["QueryGetLeaseResponse"] = _QUERYGETLEASERESPONSE
+DESCRIPTOR.message_types_by_name[
+    "QueryGetNShortestLeasesRequest"
+] = _QUERYGETNSHORTESTLEASESREQUEST
+DESCRIPTOR.message_types_by_name[
+    "QueryGetNShortestLeasesResponse"
+] = _QUERYGETNSHORTESTLEASESRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-QueryFileRequest = _reflection.GeneratedProtocolMessageType('QueryFileRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYFILEREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryFileRequest)
-  })
+QueryFileRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryFileRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYFILEREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryFileRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryFileRequest)
 
-QueryFileResponse = _reflection.GeneratedProtocolMessageType('QueryFileResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYFILERESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryFileResponse)
-  })
+QueryFileResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryFileResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYFILERESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryFileResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryFileResponse)
 
-QueryKeyValuesRequest = _reflection.GeneratedProtocolMessageType('QueryKeyValuesRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYKEYVALUESREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryKeyValuesRequest)
-  })
+QueryKeyValuesRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryKeyValuesRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYKEYVALUESREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryKeyValuesRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryKeyValuesRequest)
 
-QueryKeyValuesResponse = _reflection.GeneratedProtocolMessageType('QueryKeyValuesResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYKEYVALUESRESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryKeyValuesResponse)
-  })
+QueryKeyValuesResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryKeyValuesResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYKEYVALUESRESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryKeyValuesResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryKeyValuesResponse)
 
-QueryReadRequest = _reflection.GeneratedProtocolMessageType('QueryReadRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYREADREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryReadRequest)
-  })
+QueryReadRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryReadRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYREADREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryReadRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryReadRequest)
 
-QueryReadResponse = _reflection.GeneratedProtocolMessageType('QueryReadResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYREADRESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryReadResponse)
-  })
+QueryReadResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryReadResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYREADRESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryReadResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryReadResponse)
 
-QueryKeysRequest = _reflection.GeneratedProtocolMessageType('QueryKeysRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYKEYSREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryKeysRequest)
-  })
+QueryKeysRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryKeysRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYKEYSREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryKeysRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryKeysRequest)
 
-QueryKeysResponse = _reflection.GeneratedProtocolMessageType('QueryKeysResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYKEYSRESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryKeysResponse)
-  })
+QueryKeysResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryKeysResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYKEYSRESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryKeysResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryKeysResponse)
 
-QueryMyKeysRequest = _reflection.GeneratedProtocolMessageType('QueryMyKeysRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYMYKEYSREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryMyKeysRequest)
-  })
+QueryMyKeysRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryMyKeysRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYMYKEYSREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryMyKeysRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryMyKeysRequest)
 
-QueryMyKeysResponse = _reflection.GeneratedProtocolMessageType('QueryMyKeysResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYMYKEYSRESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryMyKeysResponse)
-  })
+QueryMyKeysResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryMyKeysResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYMYKEYSRESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryMyKeysResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryMyKeysResponse)
 
-QueryCountRequest = _reflection.GeneratedProtocolMessageType('QueryCountRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYCOUNTREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryCountRequest)
-  })
+QueryCountRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryCountRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYCOUNTREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryCountRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryCountRequest)
 
-QueryCountResponse = _reflection.GeneratedProtocolMessageType('QueryCountResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYCOUNTRESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryCountResponse)
-  })
+QueryCountResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryCountResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYCOUNTRESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryCountResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryCountResponse)
 
-QueryHasRequest = _reflection.GeneratedProtocolMessageType('QueryHasRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYHASREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryHasRequest)
-  })
+QueryHasRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryHasRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYHASREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryHasRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryHasRequest)
 
-QueryHasResponse = _reflection.GeneratedProtocolMessageType('QueryHasResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYHASRESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryHasResponse)
-  })
+QueryHasResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryHasResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYHASRESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryHasResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryHasResponse)
 
-QuerySearchRequest = _reflection.GeneratedProtocolMessageType('QuerySearchRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYSEARCHREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QuerySearchRequest)
-  })
+QuerySearchRequest = _reflection.GeneratedProtocolMessageType(
+    "QuerySearchRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYSEARCHREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QuerySearchRequest)
+    },
+)
 _sym_db.RegisterMessage(QuerySearchRequest)
 
-QuerySearchResponse = _reflection.GeneratedProtocolMessageType('QuerySearchResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYSEARCHRESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QuerySearchResponse)
-  })
+QuerySearchResponse = _reflection.GeneratedProtocolMessageType(
+    "QuerySearchResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYSEARCHRESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QuerySearchResponse)
+    },
+)
 _sym_db.RegisterMessage(QuerySearchResponse)
 
-QueryGetLeaseRequest = _reflection.GeneratedProtocolMessageType('QueryGetLeaseRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYGETLEASEREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryGetLeaseRequest)
-  })
+QueryGetLeaseRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryGetLeaseRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYGETLEASEREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryGetLeaseRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryGetLeaseRequest)
 
-QueryGetLeaseResponse = _reflection.GeneratedProtocolMessageType('QueryGetLeaseResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYGETLEASERESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryGetLeaseResponse)
-  })
+QueryGetLeaseResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryGetLeaseResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYGETLEASERESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryGetLeaseResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryGetLeaseResponse)
 
-QueryGetNShortestLeasesRequest = _reflection.GeneratedProtocolMessageType('QueryGetNShortestLeasesRequest', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYGETNSHORTESTLEASESREQUEST,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryGetNShortestLeasesRequest)
-  })
+QueryGetNShortestLeasesRequest = _reflection.GeneratedProtocolMessageType(
+    "QueryGetNShortestLeasesRequest",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYGETNSHORTESTLEASESREQUEST,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryGetNShortestLeasesRequest)
+    },
+)
 _sym_db.RegisterMessage(QueryGetNShortestLeasesRequest)
 
-QueryGetNShortestLeasesResponse = _reflection.GeneratedProtocolMessageType('QueryGetNShortestLeasesResponse', (_message.Message,), {
-  'DESCRIPTOR' : _QUERYGETNSHORTESTLEASESRESPONSE,
-  '__module__' : 'crud.query_pb2'
-  # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryGetNShortestLeasesResponse)
-  })
+QueryGetNShortestLeasesResponse = _reflection.GeneratedProtocolMessageType(
+    "QueryGetNShortestLeasesResponse",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _QUERYGETNSHORTESTLEASESRESPONSE,
+        "__module__": "crud.query_pb2"
+        # @@protoc_insertion_point(class_scope:bluzelle.curium.crud.QueryGetNShortestLeasesResponse)
+    },
+)
 _sym_db.RegisterMessage(QueryGetNShortestLeasesResponse)
 
 
 DESCRIPTOR._options = None
 
 _QUERY = _descriptor.ServiceDescriptor(
-  name='Query',
-  full_name='bluzelle.curium.crud.Query',
-  file=DESCRIPTOR,
-  index=0,
-  serialized_options=None,
-  create_key=_descriptor._internal_create_key,
-  serialized_start=1620,
-  serialized_end=3065,
-  methods=[
-  _descriptor.MethodDescriptor(
-    name='Read',
-    full_name='bluzelle.curium.crud.Query.Read',
+    name="Query",
+    full_name="bluzelle.curium.crud.Query",
+    file=DESCRIPTOR,
     index=0,
-    containing_service=None,
-    input_type=_QUERYREADREQUEST,
-    output_type=_QUERYREADRESPONSE,
-    serialized_options=b'\202\323\344\223\002)\022\'/bluzelle/curium/crud/Read/{uuid}/{key}',
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='Keys',
-    full_name='bluzelle.curium.crud.Query.Keys',
-    index=1,
-    containing_service=None,
-    input_type=_QUERYKEYSREQUEST,
-    output_type=_QUERYKEYSRESPONSE,
-    serialized_options=b'\202\323\344\223\002#\022!/bluzelle/curium/crud/Keys/{uuid}',
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='MyKeys',
-    full_name='bluzelle.curium.crud.Query.MyKeys',
-    index=2,
-    containing_service=None,
-    input_type=_QUERYMYKEYSREQUEST,
-    output_type=_QUERYMYKEYSRESPONSE,
-    serialized_options=b'\202\323\344\223\002(\022&/bluzelle/curium/crud/MyKeys/{address}',
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='Count',
-    full_name='bluzelle.curium.crud.Query.Count',
-    index=3,
-    containing_service=None,
-    input_type=_QUERYCOUNTREQUEST,
-    output_type=_QUERYCOUNTRESPONSE,
-    serialized_options=b'\202\323\344\223\002$\022\"/bluzelle/curium/crud/Count/{uuid}',
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='Has',
-    full_name='bluzelle.curium.crud.Query.Has',
-    index=4,
-    containing_service=None,
-    input_type=_QUERYHASREQUEST,
-    output_type=_QUERYHASRESPONSE,
-    serialized_options=b'\202\323\344\223\002(\022&/bluzelle/curium/crud/Has/{uuid}/{key}',
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='Search',
-    full_name='bluzelle.curium.crud.Query.Search',
-    index=5,
-    containing_service=None,
-    input_type=_QUERYSEARCHREQUEST,
-    output_type=_QUERYSEARCHRESPONSE,
-    serialized_options=b'\202\323\344\223\0024\0222/bluzelle/curium/crud/search/{uuid}/{searchString}',
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetNShortestLeases',
-    full_name='bluzelle.curium.crud.Query.GetNShortestLeases',
-    index=6,
-    containing_service=None,
-    input_type=_QUERYGETNSHORTESTLEASESREQUEST,
-    output_type=_QUERYGETNSHORTESTLEASESRESPONSE,
-    serialized_options=b'\202\323\344\223\0027\0225/bluzelle/curium/crud/GetNShortestLeases/{uuid}/{num}',
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='GetLease',
-    full_name='bluzelle.curium.crud.Query.GetLease',
-    index=7,
-    containing_service=None,
-    input_type=_QUERYGETLEASEREQUEST,
-    output_type=_QUERYGETLEASERESPONSE,
-    serialized_options=b'\202\323\344\223\002-\022+/bluzelle/curium/crud/GetLease/{uuid}/{key}',
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='KeyValues',
-    full_name='bluzelle.curium.crud.Query.KeyValues',
-    index=8,
-    containing_service=None,
-    input_type=_QUERYKEYVALUESREQUEST,
-    output_type=_QUERYKEYVALUESRESPONSE,
-    serialized_options=b'\202\323\344\223\002(\022&/bluzelle/curium/crud/KeyValues/{uuid}',
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='File',
-    full_name='bluzelle.curium.crud.Query.File',
-    index=9,
-    containing_service=None,
-    input_type=_QUERYFILEREQUEST,
-    output_type=_QUERYFILERESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
-  ),
-])
+    serialized_start=1620,
+    serialized_end=3065,
+    methods=[
+        _descriptor.MethodDescriptor(
+            name="Read",
+            full_name="bluzelle.curium.crud.Query.Read",
+            index=0,
+            containing_service=None,
+            input_type=_QUERYREADREQUEST,
+            output_type=_QUERYREADRESPONSE,
+            serialized_options=b"\202\323\344\223\002)\022'/bluzelle/curium/crud/Read/{uuid}/{key}",
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="Keys",
+            full_name="bluzelle.curium.crud.Query.Keys",
+            index=1,
+            containing_service=None,
+            input_type=_QUERYKEYSREQUEST,
+            output_type=_QUERYKEYSRESPONSE,
+            serialized_options=b"\202\323\344\223\002#\022!/bluzelle/curium/crud/Keys/{uuid}",
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="MyKeys",
+            full_name="bluzelle.curium.crud.Query.MyKeys",
+            index=2,
+            containing_service=None,
+            input_type=_QUERYMYKEYSREQUEST,
+            output_type=_QUERYMYKEYSRESPONSE,
+            serialized_options=b"\202\323\344\223\002(\022&/bluzelle/curium/crud/MyKeys/{address}",
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="Count",
+            full_name="bluzelle.curium.crud.Query.Count",
+            index=3,
+            containing_service=None,
+            input_type=_QUERYCOUNTREQUEST,
+            output_type=_QUERYCOUNTRESPONSE,
+            serialized_options=b'\202\323\344\223\002$\022"/bluzelle/curium/crud/Count/{uuid}',
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="Has",
+            full_name="bluzelle.curium.crud.Query.Has",
+            index=4,
+            containing_service=None,
+            input_type=_QUERYHASREQUEST,
+            output_type=_QUERYHASRESPONSE,
+            serialized_options=b"\202\323\344\223\002(\022&/bluzelle/curium/crud/Has/{uuid}/{key}",
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="Search",
+            full_name="bluzelle.curium.crud.Query.Search",
+            index=5,
+            containing_service=None,
+            input_type=_QUERYSEARCHREQUEST,
+            output_type=_QUERYSEARCHRESPONSE,
+            serialized_options=b"\202\323\344\223\0024\0222/bluzelle/curium/crud/search/{uuid}/{searchString}",
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetNShortestLeases",
+            full_name="bluzelle.curium.crud.Query.GetNShortestLeases",
+            index=6,
+            containing_service=None,
+            input_type=_QUERYGETNSHORTESTLEASESREQUEST,
+            output_type=_QUERYGETNSHORTESTLEASESRESPONSE,
+            serialized_options=b"\202\323\344\223\0027\0225/bluzelle/curium/crud/GetNShortestLeases/{uuid}/{num}",
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="GetLease",
+            full_name="bluzelle.curium.crud.Query.GetLease",
+            index=7,
+            containing_service=None,
+            input_type=_QUERYGETLEASEREQUEST,
+            output_type=_QUERYGETLEASERESPONSE,
+            serialized_options=b"\202\323\344\223\002-\022+/bluzelle/curium/crud/GetLease/{uuid}/{key}",
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="KeyValues",
+            full_name="bluzelle.curium.crud.Query.KeyValues",
+            index=8,
+            containing_service=None,
+            input_type=_QUERYKEYVALUESREQUEST,
+            output_type=_QUERYKEYVALUESRESPONSE,
+            serialized_options=b"\202\323\344\223\002(\022&/bluzelle/curium/crud/KeyValues/{uuid}",
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.MethodDescriptor(
+            name="File",
+            full_name="bluzelle.curium.crud.Query.File",
+            index=9,
+            containing_service=None,
+            input_type=_QUERYFILEREQUEST,
+            output_type=_QUERYFILERESPONSE,
+            serialized_options=None,
+            create_key=_descriptor._internal_create_key,
+        ),
+    ],
+)
 _sym_db.RegisterServiceDescriptor(_QUERY)
 
-DESCRIPTOR.services_by_name['Query'] = _QUERY
+DESCRIPTOR.services_by_name["Query"] = _QUERY
 
 # @@protoc_insertion_point(module_scope)

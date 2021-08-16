@@ -1,23 +1,16 @@
-import base64
 import hashlib
-import json
-from typing import Dict, List
+from typing import List
 
 import ecdsa
-from cosmospy.typing import SyncMode
-from google.protobuf import json_format
 from google.protobuf.any_pb2 import Any
 from google.protobuf.message import Message
 
-from bluzelle.codec.cosmos.base.v1beta1.coin_pb2 import Coin
 from bluzelle.codec.cosmos.crypto.secp256k1.keys_pb2 import PubKey
 from bluzelle.codec.cosmos.tx.signing.v1beta1.signing_pb2 import SignMode
-from bluzelle.codec.cosmos.tx.v1beta1.tx_pb2 import (Fee, ModeInfo, SignerInfo,
-                                                     Tx)
-
+from bluzelle.codec.cosmos.tx.v1beta1.tx_pb2 import Fee, ModeInfo, SignerInfo, Tx
 from ._sign_mode_handler import SignModeHandler
 from ._signature import SignatureV2, SignerData, SingleSignatureData
-from ._wallet import DEFAULT_BECH32_HRP, privkey_to_address, privkey_to_pubkey
+from ._wallet import privkey_to_pubkey
 
 
 class Transaction:
@@ -31,7 +24,7 @@ class Transaction:
         messages: List[Message],
         sign_mode: SignMode,
         fee: Fee,
-        memo: str = "",
+        memo: str = None,
         chain_id: str = "",
     ) -> None:
         """
@@ -42,7 +35,7 @@ class Transaction:
           sign_mode: for creating the raw transaction, a :term:`SignModeHandler` with
             the same supported mode should be used to sign this transaction later.
           fee: default fee.
-          memo: the memo to be included in the transaction.
+          memo: Optional memo to be included in the transaction.
           chain_id:  required to create the signer data.
         """
         self._privkey = privkey
@@ -55,12 +48,9 @@ class Transaction:
 
         # Getting the public key from the private key.
         self._pubkey = privkey_to_pubkey(self._privkey)
-        
-
-
 
     def _set_messages(self, serialized_messages: List[Any]) -> None:
-        """Pack messages and add them to the raw tx"""
+        """Pack messages and add them to the raw tx."""
         for m in serialized_messages:
             slot = self._tx.body.messages.add()
             slot.Pack(m, type_url_prefix="")
@@ -85,9 +75,7 @@ class Transaction:
 
             signer_info = SignerInfo()
             signer_info.mode_info.CopyFrom(mode_info)
-            signer_info.public_key.Pack(
-                PubKey(key=signature.pub_key), type_url_prefix=""
-            )
+            signer_info.public_key.Pack(PubKey(key=signature.pub_key), type_url_prefix="")
 
             # Do not include default values as per ADR-027.
             if signature.sequence > 0:
@@ -108,21 +96,24 @@ class Transaction:
 
     def create(self):
         """Creates a raw transaction.
-        
+
         Args:
-          sign_mode: 
+          sign_mode:
         Raises:
           ValueError: gas_limit for the transaction should be a positive number.
         """
         self._tx = Tx()
-        self._tx.body.memo = self._memo
-        
+
+        # Assiging the memo if provided.
+        if self._memo is not None:
+            self._tx.body.memo = self._memo
+
         # Assigning the fee to the tx.
         self._tx.auth_info.fee.CopyFrom(self._fee)
-        
+
         # Adding the messages to the transaction.
         self._set_messages(self._messages)
-        
+
         # Setting the default fees.
         if self._fee is None:
             self._fee = Fee(gas_limit=200000)
@@ -144,27 +135,28 @@ class Transaction:
         self._set_signatures([sig])
         return self
 
-
     def sign(
         self,
         sign_mode_handler: SignModeHandler,
     ) -> bytes:
         """Sign the raw transaction.
-        
+
         Args:
           sign_mode_handler: Responsible to calculating sign bytes of the signed
              the transaction.
-        
+
         Raises:
-          ValueError: for different sign_mode from the current one that used to 
-             create the raw transaction. 
+          ValueError: for different sign_mode from the current one that used to
+             create the raw transaction.
         """
 
         # Checking sign mode from the sign_mode_handler.
         if self._sign_mode != sign_mode_handler.get_mode():
-            raise ValueError("The SignMode for the sign_mode_handler and the \
-            raw tx sould be the same!")
-        
+            raise ValueError(
+                "The SignMode for the sign_mode_handler and the \
+            raw tx sould be the same!"
+            )
+
         # Generate the bytes to be signed.
         signer_data = SignerData(
             chain_id=self._chain_id,
@@ -197,7 +189,7 @@ class Transaction:
         return self._tx
 
     def _sign(self, input_bytes) -> str:
-        """Signing the input bytes using the same cosmos blockchain format"""
+        """Signing the input bytes using the same cosmos blockchain format."""
         privkey = ecdsa.SigningKey.from_string(self._privkey, curve=ecdsa.SECP256k1)
         signature_compact = privkey.sign_deterministic(
             input_bytes,

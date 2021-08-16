@@ -1,29 +1,28 @@
 import abc
-from typing import List, Sequence
 
-import six
 from google.protobuf.internal.well_known_types import Any
+import six
 
 from bluzelle.codec.cosmos.tx.signing.v1beta1.signing_pb2 import SignMode
 
-
 # Adapted from here: https://github.com/Echolon166/bluzelle_dart/blob/main/lib/src/types/cosmos_signature.dart
 
+
 class SignerData:
-    """SignerData is the specific information needed to sign a transaction
-    that generally isn't included in the transaction body itself.
-    """
-    # 
+    """SignerData is the specific information needed to sign a transaction that
+    generally isn't included in the transaction body itself."""
+
+    #
     chain_id: str
 
-    # 
+    #
     account_number: int
-
 
     sequence: int
 
     def __init__(self, chain_id: str, account_number: int, sequence: int):
         """Creates a new SignerData object.
+
         Args:
           chain_id: the chain that this transaction is targeted.
           account_number: the account number of the signer.
@@ -37,18 +36,20 @@ class SignerData:
 
 
 class SignatureData(six.with_metaclass(abc.ABCMeta)):
-    """ SignatureData represents either a SingleSignatureData or a
+    """SignatureData represents either a SingleSignatureData or a
     MultiSignatureData.
-    It is a convenience type that is easier to use in business logic than
-    the encoded protobuf ModeInfo's and raw signatures.
+
+    It is a convenience type that is easier to use in business logic
+    than the encoded protobuf ModeInfo's and raw signatures.
     """
+
     pass
 
 
 class SingleSignatureData(SignatureData):
-    """SingleSignatureData represents the signature and SignMode of a
-    single (non-multisig) signer.
-    """
+    """SingleSignatureData represents the signature and SignMode of a single
+    (non-multisig) signer."""
+
     sign_mode: SignMode
     signature: bytes
 
@@ -57,25 +58,24 @@ class SingleSignatureData(SignatureData):
         self.signature = signature
 
 
-
 class SignatureV2:
     """SignatureV2 is a convenience type that is easier to use in application
     logic than the protobuf SignerInfo's and raw signature bytes.
-    It goes beyond the first sdk.Signature types by supporting sign modes and
-    explicitly nested multi-signatures.
-    It is intended to be used for both building and verifying signatures. 
+
+    It goes beyond the first sdk.Signature types by supporting sign
+    modes and explicitly nested multi-signatures. It is intended to be
+    used for both building and verifying signatures.
     """
 
     pub_key: Any
 
-    
     data: SignatureData
 
     sequence: int
 
     def __init__(self, pub_key: Any, data: SignatureData, sequence: int) -> None:
         """Creates a new SignatureV2 object.
-        
+
         Args:
           pub_key: the public key to use for verifying the signature.
           data: is the actual data of the signature which includes SignMode's and

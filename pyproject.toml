@@ -95,12 +95,8 @@ known_first_party = ["bluzelle", "tests"]
 # Settings for Black compatibility
 profile = "black"
 line_length = 99
-exclude = '''
-/(
-  | codec
-)/
+skip_glob = "^codec"
 
-'''
 
 
 [tool.ward]
@@ -130,5 +126,5 @@ module = "tests.*"
 disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
-module = "ecdsa.*"
+module = "*.codec.*"
 ignore_missing_imports = true
