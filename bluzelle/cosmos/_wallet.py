@@ -1,11 +1,12 @@
 import hashlib
 
 import bech32
-from cosmospy import BIP32DerivationError
-from cosmospy.typing import Wallet
 import ecdsa
 import hdwallets
 import mnemonic
+
+from . import BIP32DerivationError
+from .typing import Wallet
 
 DEFAULT_DERIVATION_PATH = "m/44'/118'/0'/0/0"
 DEFAULT_BECH32_HRP = "bluzelle"

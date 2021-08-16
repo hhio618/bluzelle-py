@@ -8,5 +8,6 @@
 - async and wss
 - make sure of deps installation + readme
 - how to run example and tests
+- add coverage + codecov
 - with transaction loop condition? check from the bluzelle dart
 - tests
