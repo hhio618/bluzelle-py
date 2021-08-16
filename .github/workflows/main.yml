@@ -1,0 +1,69 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master ]
+    tags: [ '[0-9]+.[0-9]+.[0-9]+*' ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: ['3.7', '3.8', '3.9']
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Installation (deps and package)
+      run: |
+        pip install "poetry==1.1.7"
+        poetry config virtualenvs.create false
+        poetry install --no-interaction --no-ansi
+    - name: Linters
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.7'
+      run: |
+        mypy .
+        pre-commit run -a
+    - name: Test with Ward
+      run: |
+        coverage run -m ward
+        coverage report --fail-under=95
+    - name: Report coverage
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.7'
+      run: |
+        pip install codecov
+        codecov
+
+  pypi-publish:
+    # Only publish if all other jobs succeed
+    needs: [ build ]
+    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install build and publish tools
+      run: |
+        pip install build twine
+    - name: Build and check
+      run: |
+        rm -rf dist/ && python -m build
+        twine check dist/*
+    - name: Publish
+      run: |
+        twine upload dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 mkdir -p proto/google/api
 mkdir -p proto/google/protobuf
 curl https://raw.githubusercontent.com/googleapis/googleapis/master/google/api/annotations.proto > proto/google/api/annotations.proto

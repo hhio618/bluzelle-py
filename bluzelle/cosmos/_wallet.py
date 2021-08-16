@@ -4,7 +4,6 @@ import bech32
 import ecdsa
 import hdwallets
 import mnemonic
-
 from cosmospy import BIP32DerivationError
 from cosmospy.typing import Wallet
 

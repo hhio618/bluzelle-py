@@ -1,0 +1,134 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+name = "bluzelle"
+version = "0.1.0"
+authors = ["hhio618 <hhio618@users.noreply.github.com>"]
+description = "Python library for the Bluzelle DB"
+repository = "https://github.com/hhio618/bluzelle-py"
+readme = "README.md"
+license = "MIT"
+classifiers = [
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+keywords = ["bluzelle", "blockchain", "bech32", "cryptocurrency"]
+
+packages = [
+    {include = "bluzelle"},
+]
+include = ["bluzelle/py.typed"]
+
+[tool.poetry.urls]
+"Changelog" = "https://github.com/hhio618/bluzelle-py/blob/master/CHANGELOG.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+ecdsa = ">=0.14.0"
+bech32 = ">=1.1.0"
+mnemonic = ">=0.19"
+hdwallets = ">=0.1.0"
+colorlog = ">=5.0.1"
+grpcio = ">=1.39.0"
+protobuf = ">=3.17.3"
+rlp = ">=2.0.1"
+pysha3 = ">=1.0.2"
+typing-extensions = { version = ">=3.7.4", python = "<3.8" }
+
+[tool.poetry.dev-dependencies]
+# Tests
+ward = "*"
+coverage = { version = "*", extras = ["toml"] }
+
+# Tools
+mypy = "*"
+pre-commit = "*"
+bump2version = "*"
+python-dotenv = "*"
+ipdb = "*"
+pytest = "*"
+importlib-metadata = "*"
+isort = "==4.3.19"
+black = "==21.7b0"
+
+[tool.poetry.build]
+generate-setup-file = false
+
+[tool.poe.tasks]
+get-proto-files = "./scripts/get_proto.sh"
+generate-proto-bindings =	"./scripts/generate_proto.sh"
+fix-proto-binding-imports =	"./scripts/fix_imports.sh"
+proto-bindings = ["get-proto-files", "generate-proto-bindings", "fix-proto-binding-imports"]
+test = "pytest --cov=bluzelle"
+typecheck = "mypy ."
+codestyle = "black --check --diff ."
+check = ["test", "typecheck", "codestyle"]
+
+[tool.black]
+line-length = 99
+multi_line_output=3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+exclude = '''
+/(
+  | codec
+)/
+
+'''
+
+
+[tool.isort]
+# Force imports to be sorted by module, independent of import type
+force_sort_within_sections = true
+# Group first party and local folder imports together
+no_lines_before = ["LOCALFOLDER"]
+
+# Configure isort to work without access to site-packages
+known_first_party = ["bluzelle", "tests"]
+
+# Settings for Black compatibility
+profile = "black"
+line_length = 99
+exclude = '''
+/(
+  | codec
+)/
+
+'''
+
+
+[tool.ward]
+order = "random"
+
+
+[tool.coverage.run]
+omit = ["tests/*", "*/site-packages/*"]
+
+
+[tool.mypy]
+show_error_codes = true
+warn_unreachable = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+# Disabling incremental mode is required for `warn_unused_configs = true` to work
+incremental = false
+disallow_untyped_defs = true
+check_untyped_defs = true
+strict_equality = true
+implicit_reexport = false
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = "ecdsa.*"
+ignore_missing_imports = true
