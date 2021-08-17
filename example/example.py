@@ -1,6 +1,6 @@
 import datetime
 import time
-
+import uuid as u
 from bluzelle.codec.cosmos.bank.v1beta1.query_pb2 import QueryBalanceRequest
 from bluzelle.codec.crud.lease_pb2 import Lease
 from bluzelle.codec.crud.query_pb2 import (
@@ -13,9 +13,7 @@ from bluzelle.codec.crud.query_pb2 import (
 from bluzelle.codec.crud.tx_pb2 import MsgCreate, MsgRenewLeasesAll, MsgUpdate
 from bluzelle.sdk.bluzelle import Bluzelle
 
-uuid = "sampleuuid"
-sample_creator = "bluzelle1qlme4k6gdrw25vues9kcz3nm6w8c38ml82kz5k"
-
+uuid = str(u.uuid4())
 
 def populate_uuid(sdk):
     sdk.db.with_transactions(
@@ -61,7 +59,7 @@ def diff_cost_with_different_lease(sdk):
     first_cost = int(response_1.balance.amount)
     sdk.db.tx.Create(
         MsgCreate(
-            creator=sample_creator,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key="someKeyA",
             value="someValue".encode("utf-8"),
@@ -100,7 +98,7 @@ def diff_cost_with_different_lease(sdk):
     second_cost = int(response_3.balance.amount)
     sdk.db.tx.Create(
         MsgCreate(
-            creator=sample_creator,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key="someKeyB",
             value="someValue".encode("utf-8"),
@@ -143,7 +141,7 @@ def diff_cost_equal_message_size(sdk):
     first_cost = int(response_1.balance.amount)
     sdk.db.tx.Create(
         MsgCreate(
-            creator=sample_creator,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key="someKeyA",
             value="someValue".encode("utf-8"),
@@ -182,7 +180,7 @@ def diff_cost_equal_message_size(sdk):
     second_cost = int(response_3.balance.amount)
     sdk.db.tx.Create(
         MsgCreate(
-            creator=sample_creator,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key="someKeyB",
             value="someValue".encode("utf-8"),
@@ -213,7 +211,7 @@ def diff_cost_equal_message_size(sdk):
 def main(sdk):
     sdk.db.tx.Create(
         MsgCreate(
-            creator=sample_creator,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key="myKey",
             value="myValue".encode("utf-8"),
@@ -241,7 +239,7 @@ def main(sdk):
 
     sdk.db.tx.Update(
         MsgUpdate(
-            creator=sample_creator,
+            creator=sdk.wallet.address,
             uuid=uuid,
             key="myKey",
             value="updatedValue".encode("utf-8"),
@@ -325,7 +323,7 @@ def main(sdk):
     print(f"Getting 5 shortest lease {response}")
     sdk.db.tx.RenewLeasesAll(
         MsgRenewLeasesAll(
-            creator=sample_creator,
+            creator=sdk.wallet.address,
             uuid=uuid,
             lease=Lease(seconds=10),
         ),
