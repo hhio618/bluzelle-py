@@ -1,6 +1,8 @@
 # Bluzelle python API
 
 ![Build workflow](https://github.com/hhio618/bluzelle-py/actions/workflows/main.yml/badge.svg)
+[![codecov.io](https://codecov.io/github/hhio618/bluzelle-py/coverage.svg?branch=master)](https://codecov.io/github/hhio618/bluzelle-py)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![GitHub license](https://img.shields.io/github/license/hhio618/bluzelle-py)](https://github.com/hhio618/bluzelle-py/blob/master/LICENSE)
 
 <a href="https://bluzelle.com/"><img src='https://raw.githubusercontent.com/bluzelle/api/master/source/images/Bluzelle%20-%20Logo%20-%20Big%20-%20Colour.png' alt="Bluzelle" style="width: 100%"/></a>
