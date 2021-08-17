@@ -8,6 +8,7 @@
 **Bluzelle-py** is a Python library that can be used to access the Bluzelle database service.
 
 # Setup
+
 The Python Library is not yet published on any package manager, To install and use follow the below instructions:
 
 ```sh
@@ -134,8 +135,7 @@ sdk.db.tx.Create(
 
 \*\*Note: see bluzelle.codec.crud.lease_pb2 to see the Lease interface
 
-
-<!-- 
+<!--
 - Bank module tx:
 ```python
 bank.tx.Send func
@@ -144,6 +144,7 @@ bank.tx.Send func
 
 Note: IDEs should recognize the types and auto-fill the sdk module hierarchy, and the corresponding fields for the request and response objects for each method: IntelliJ, VS, WebStorm, PhpStorm, etc.
 -->
+
 ## with_transactions()
 
 _Wrap multiple messages in a single transaction._
@@ -229,14 +230,14 @@ sdk.db.tx.Create(
 
 Returns: MsgCreateResponse (empty object)
 
-| MsgCreateRequest | Description         | Type       |
-| :--------------- | :------------------ | ---------- |
-| creator          | Signer address      | str        |
-| uuid             | Database identifier | str        |
-| key              |                     | str        |
-| value            |                     | bytes      |
-| metadata         |                     | Uint8Array |
-| lease            | Key-value life-span | Lease \*   |
+| MsgCreateRequest | Description         | Type     |
+| :--------------- | :------------------ | -------- |
+| creator          | Signer address      | str      |
+| uuid             | Database identifier | str      |
+| key              |                     | str      |
+| value            |                     | bytes    |
+| metadata         |                     | bytes    |
+| lease            | Key-value life-span | Lease \* |
 
 \*Lease(seconds= number, minutes= number, hours= number, days= number, years= number)
 
@@ -261,11 +262,11 @@ Delete a key-value in the database.
 
 Returns: MsgDeleteResponse (empty object)
 
-| MsgDeleteRequest | Description         | Type   |
-| :--------------- | :------------------ | ------ |
-| creator          | Signer address      | string |
-| uuid             | Database identifier | string |
-| key              | Key to delete       | string |
+| MsgDeleteRequest | Description         | Type |
+| :--------------- | :------------------ | ---- |
+| creator          | Signer address      | str  |
+| uuid             | Database identifier | str  |
+| key              | Key to delete       | str  |
 
 - ### DeleteAll\(MsgDeleteAllRequest)<a id="DeleteAll"></a>
 
@@ -281,10 +282,10 @@ print(response)
 
 Returns: Promise=>MsgDeleteAllResponse (empty object)
 
-| MsgDeleteAllRequest | Description         | Type   |
-| :------------------ | :------------------ | ------ |
-| creator             | Signer address      | string |
-| uuid                | Database identifier | string |
+| MsgDeleteAllRequest | Description         | Type |
+| :------------------ | :------------------ | ---- |
+| creator             | Signer address      | str  |
+| uuid                | Database identifier | str  |
 
 - ### MultiUpdate\(MsgMultiUpdateRequest)<a id="MultiUpdate"></a>
 
@@ -317,12 +318,11 @@ sdk.db.tx.MultiUpdate(
 
 Returns: MsgMultiUpdateResponse (empty object)
 
-| MsgMultiUpdateRequest | Description                                                  | Type             |
-| :-------------------- | :----------------------------------------------------------- | ---------------- |
-| creator               | Signer address                                               | string           |
-| uuid                  | Database identifier                                          | string           |
-| keyValues             | KeyValueLease {key: string, value: Uint8Array, lease: Lease} | KeyValueLease [] |
-
+| MsgMultiUpdateRequest | Description                                         | Type             |
+| :-------------------- | :-------------------------------------------------- | ---------------- |
+| creator               | Signer address                                      | string           |
+| uuid                  | Database identifier                                 | string           |
+| keyValues             | KeyValueLease(key: str, value: bytes, lease: Lease) | KeyValueLease [] |
 
 - ### Rename\(MsgRenameRequest)<a id="Rename"></a>
 
@@ -334,7 +334,7 @@ sdk.db.tx.Rename(
         creator=sample_creator,
         uuid='myUuid',
         key='existingKey',
-        newKey='renamingKey'    
+        newKey='renamingKey'
     ),
     timeout=3000,
     metadata=None,
@@ -347,12 +347,12 @@ sdk.db.tx.Rename(
 
 Returns: MsgRenameResponse (empty object)
 
-| MsgRenameRequest | Description            | Type   |
-| :--------------- | :--------------------- | ------ |
-| creator          | Signer address         | string |
-| uuid             | Database identifier    | string |
-| key              | Existing key           | string |
-| newKey           | New key used to rename | string |
+| MsgRenameRequest | Description            | Type |
+| :--------------- | :--------------------- | ---- |
+| creator          | Signer address         | str  |
+| uuid             | Database identifier    | str  |
+| key              | Existing key           | str  |
+| newKey           | New key used to rename | str  |
 
 - ### RenewLease\(MsgRenewLeaseRequest)<a id="RenewLease"></a>
 
@@ -380,9 +380,9 @@ Returns: MsgRenewLeaseResponse (empty object)
 
 | MsgRenewLeaseRequest | Description                 | Type     |
 | :------------------- | :-------------------------- | -------- |
-| creator              | Signer address              | string   |
-| uuid                 | Database identifier         | string   |
-| key                  |                             | string   |
+| creator              | Signer address              | str      |
+| uuid                 | Database identifier         | str      |
+| key                  |                             | str      |
 | lease                | New life-span for key-value | Lease \* |
 
 \*Lease(seconds=number, minutes=number, hours=number, days=number, years=number)
@@ -412,8 +412,8 @@ Returns: MsgRenewLeasesAllResponse (empty object)
 
 | MsgRenewLeasesAllRequest | Description                      | Type     |
 | :----------------------- | :------------------------------- | -------- |
-| creator                  | Signer address                   | string   |
-| uuid                     | Database identifier              | string   |
+| creator                  | Signer address                   | str      |
+| uuid                     | Database identifier              | str      |
 | lease                    | New life-span for all key-values | Lease \* |
 
 \*Lease(seconds=number, minutes=number, hours=number, days=number, years=number)
@@ -443,11 +443,11 @@ Returns: MsgUpdateResponse (empty object)
 
 | MsgUpdateRequest | Description            | Type       |
 | :--------------- | :--------------------- | ---------- |
-| creator          | Signer address         | string     |
-| uuid             | Database identifier    | string     |
-| key              |                        | string     |
-| value            | New value to update to | Uint8Array |
-| metadata         |                        | Uint8Array |
+| creator          | Signer address         | str        |
+| uuid             | Database identifier    | str        |
+| key              |                        | str        |
+| value            | New value to update to | bytes      |
+| metadata         |                        | bytes      |
 | lease            | Key-value life-span    | Lease      |
 
 \*Lease(seconds=number, minutes=number, hours=number, days=number, years=number)
@@ -478,11 +478,11 @@ Returns: MsgUpsertResponse (empty object)
 
 | MsgUpsertRequest | Description         | Type       |
 | :--------------- | :------------------ | ---------- |
-| creator          | Signer address      | string     |
-| uuid             | Database identifier | string     |
-| key              |                     | string     |
-| value            |                     | Uint8Array |
-| metadata         |                     | Uint8Array |
+| creator          | Signer address      | str        |
+| uuid             | Database identifier | str        |
+| key              |                     | str        |
+| value            |                     | bytes      |
+| metadata         |                     | bytes      |
 | lease            | Key-value life-span | Lease \*   |
 
 \*Lease(seconds=number, minutes=number, hours=number, days=number, years=number)
@@ -511,11 +511,11 @@ Returns: QueryCountResponse
 
 | QueryCountRequest | Description         | Type   |
 | :---------------- | :------------------ | ------ |
-| uuid              | Database identifier | string |
+| uuid              | Database identifier | str    |
 
 | QueryCountResponse | Description                      | Type   |
 | :----------------- | :------------------------------- | ------ |
-| count              | Number of key-values in the uuid | number |
+| count              | Number of key-values in the uuid | int    |
 
 - ### GetLease\(QueryGetLeaseRequest)<a id="GetLease"></a>
 
@@ -539,8 +539,8 @@ Returns: QueryGetLeaseResponse
 
 | QueryGetLeaseRequest | Description         | Type   |
 | :------------------- | :------------------ | ------ |
-| uuid                 | Database identifier | string |
-| key                  |                     | string |
+| uuid                 | Database identifier | str    |
+| key                  |                     | str    |
 
 | QueryGetLeaseResponse | Description                       | Type   |
 | :-------------------- | :-------------------------------- | ------ |
@@ -568,48 +568,44 @@ Returns: QueryGetNShortestLeasesResponse
 
 | QueryGetNShortestLeasesRequest | Description                   | Type   |
 | :----------------------------- | :---------------------------- | ------ |
-| uuid                           | Database identifier           | string |
-| num                            | Number of keyLeases to return | number |
+| uuid                           | Database identifier           | str    |
+| num                            | Number of keyLeases to return | int    |
 
-| QueryGetNShortestLeasesResponse | Description                             | Type        |
-| :------------------------------ | :-------------------------------------- | ----------- |
-| keyLeases                       | KeyLease {key: string, seconds: number} | KeyLease [] |
+| QueryGetNShortestLeasesResponse | Description                             | Type            |
+| :------------------------------ | :-------------------------------------- | --------------- |
+| keyLeases                       | KeyLease(key=string, seconds=number)    |  list(KeyLease) |
 
 - ### Has\(QueryHasRequest)<a id="Has"></a>
 
 Check if a key exists in the specified uuid.
 
 ```typescript
-
 sdk.db.q.Has(
-    MsgHas(
-        uuid='myUuid',
-        key='myKey'
-    ),
-    timeout=3000,
-    metadata=None,
-    credentials=None,
-    wait_for_ready=True,
-    compression=False,
-)
-
+  MsgHas((uuid = "myUuid"), (key = "myKey")),
+  (timeout = 3000),
+  (metadata = None),
+  (credentials = None),
+  (wait_for_ready = True),
+  (compression = False)
+);
 ```
 
 Returns: QueryHasResponse
 
 | QueryHasRequest | Description         | Type   |
 | :-------------- | :------------------ | ------ |
-| uuid            | Database identifier | string |
-| key             |                     | string |
+| uuid            | Database identifier | str    |
+| key             |                     | str    |
 
 | QueryHasResponse | Description                                 | Type    |
 | :--------------- | :------------------------------------------ | ------- |
-| has              | true if key exists in uuid; false otherwise | boolean |
+| has              | true if key exists in uuid; false otherwise | bool    |
 
 - ### Keys\(QueryKeysRequest}<a id="Keys"></a>
 
 Read the complete set of keys in the specified uuid.
 ###hhio
+
 ```python
 
 sdk.db.q.Keys(
@@ -633,12 +629,12 @@ Returns: QueryKeysResponse
 
 | QueryKeysRequest      | Description                                   | Type          |
 | :-------------------- | :-------------------------------------------- | ------------- |
-| uuid                  | Database identifier                           | string        |
-| pagination (optional) | PagingRequest {startKey: string, limit: Long} | PagingRequest |
+| uuid                  | Database identifier                           | str           |
+| pagination (optional) | PagingRequest(startKey=string, limit=Long)    | PagingRequest |
 
 | QueryKeysResponse     | Description                                   | Type           |
 | :-------------------- | :-------------------------------------------- | -------------- |
-| keys                  |                                               | string []      |
+| keys                  |                                               | list(str)      |
 | pagination (optional) | PagingResponse {nextKey: string, total: Long} | PagingResponse |
 
 - ### KeyValues\(QueryKeyValuesRequest)<a id="KeyValues"></a>
@@ -660,44 +656,41 @@ Returns: QueryKeyValuesResponse
 
 | QueryKeyValuesRequest | Description                                   | Type          |
 | :-------------------- | :-------------------------------------------- | ------------- |
-| uuid                  | Database identifier                           | string        |
+| uuid                  | Database identifier                           | str           |
 | pagination (optional) | PagingRequest {startKey: string, limit: Long} | PagingRequest |
 
 | QueryKeyValuesResponse | Description                                   | Type           |
 | :--------------------- | :-------------------------------------------- | -------------- |
-| keyValues              | KeyValue {key: string, value: Uint8Array}     | KeyValue []    |
+| keyValues              | KeyValue {key: string, value: Uint8Array}     | list(KeyValue) |
 | pagination (optional)  | PagingResponse {nextKey: string, total: Long} | PagingResponse |
 
 - ### MyKeys\(QueryMyKeysRequest)<a id="MyKeys"></a>
 
 Read the complete set of keys by address in the specified uuid.
 ###hhio
+
 ```typescript
 sdk.db.q.Keys(
-    MsgKeys(
-        uuid='myUuid',
-        address=sample_creator
-    ),
-    timeout=3000,
-    metadata=None,
-    credentials=None,
-    wait_for_ready=True,
-    compression=False,
-)
-
+  MsgKeys((uuid = "myUuid"), (address = sample_creator)),
+  (timeout = 3000),
+  (metadata = None),
+  (credentials = None),
+  (wait_for_ready = True),
+  (compression = False)
+);
 ```
 
 Returns: QueryMyKeysResponse
 
 | QueryMyKeysRequest    | Description                                   | Type          |
 | :-------------------- | :-------------------------------------------- | ------------- |
-| uuid                  | Database identifier                           | string        |
-| address               | Bluzelle address                              | string        |
+| uuid                  | Database identifier                           | str           |
+| address               | Bluzelle address                              | str           |
 | pagination (optional) | PagingRequest {startKey: string, limit: Long} | PagingRequest |
 
 | QueryMyKeysResponse   | Description                                   | Type           |
 | :-------------------- | :-------------------------------------------- | -------------- |
-| keys                  |                                               | string []      |
+| keys                  |                                               |  list(string)  |
 | pagination (optional) | PagingResponse {nextKey: string, total: Long} | PagingResponse |
 
 - ### Read\(QueryReadRequest)<a id="Read"></a>
@@ -722,12 +715,12 @@ Returns: QueryReadResponse
 
 | QueryReadRequest | Description         | Type   |
 | :--------------- | :------------------ | ------ |
-| uuid             | Database identifier | string |
-| key              |                     | string |
+| uuid             | Database identifier | str    |
+| key              |                     | str    |
 
 | QueryReadResponse | Description | Type       |
 | :---------------- | :---------- | ---------- |
-| value             |             | Uint8Array |
+| value             |             | bytes      |
 
 - ### Search\(QuerySearchRequest)<a id="Search"></a>
 
@@ -751,11 +744,11 @@ Returns: QuerySearchResponse
 
 | QuerySearchRequest    | Description                                          | Type          |
 | :-------------------- | :--------------------------------------------------- | ------------- |
-| uuid                  | Database identifier                                  | string        |
-| searchString          | query for keys that start with or match searchString | string        |
+| uuid                  | Database identifier                                  | str           |
+| searchString          | query for keys that start with or match searchString | str           |
 | pagination (optional) | {startKey: string, limit: Long}                      | PagingRequest |
 
 | QuerySearchResponse   | Description                               | Type           |
 | :-------------------- | :---------------------------------------- | -------------- |
-| keyValues             | KeyValue {key: string, value: Uint8Array} | KeyValue []    |
+| keyValues             | KeyValue {key: string, value: Uint8Array} | list(KeyValue) |
 | pagination (optional) | {nextKey: string, total: Long}            | PagingResponse |
