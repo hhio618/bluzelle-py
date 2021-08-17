@@ -19,6 +19,9 @@ $ poetry install --no-interaction --no-ansi
 $ pip install .
 ```
 
+# Publishing
+There is a github action that deploys new releases (using new tags) to the PyPI packages. it required to acquiring a `PYPI_TOKEN` from the https://pypi.org website and adding it in the github repository secrets.
+
 # Quick Start
 
 To connect your instance to the Bluzelle testnet, you can:
