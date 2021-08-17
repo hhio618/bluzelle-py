@@ -130,4 +130,5 @@ dmypy.json
 .pyre/
 .vscode
 tmp
-**_local_dev**
+*_local_dev*.py
+example/local_example_dev.py
