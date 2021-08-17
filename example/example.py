@@ -1,6 +1,7 @@
 import datetime
 import time
 import uuid as u
+
 from bluzelle.codec.cosmos.bank.v1beta1.query_pb2 import QueryBalanceRequest
 from bluzelle.codec.crud.lease_pb2 import Lease
 from bluzelle.codec.crud.query_pb2 import (
@@ -14,6 +15,7 @@ from bluzelle.codec.crud.tx_pb2 import MsgCreate, MsgRenewLeasesAll, MsgUpdate
 from bluzelle.sdk.bluzelle import Bluzelle
 
 uuid = str(u.uuid4())
+
 
 def populate_uuid(sdk):
     sdk.db.with_transactions(
