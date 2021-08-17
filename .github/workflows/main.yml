@@ -30,18 +30,18 @@ jobs:
         poetry config virtualenvs.create false
         poetry install --no-interaction --no-ansi
     - name: Linters
-      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.7'
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.8'
       run: |
         pre-commit run -a
-    - name: Test with Ward
+    - name: Test with Pytest
       run: |
         coverage run -m pytest
-        # coverage report --fail-under=95
-    - name: Report coverage
-      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.7'
-      run: |
-        pip install codecov
-        # codecov
+        coverage report
+        
+    - name: "Upload coverage to Codecov"
+      uses: codecov/codecov-action@v1
+      with:
+        fail_ci_if_error: true
 
   pypi-publish:
     # Only publish if all other jobs succeed
