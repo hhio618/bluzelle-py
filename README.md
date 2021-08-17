@@ -20,7 +20,7 @@ $ pip install .
 ```
 
 # Publishing
-There is a github action that deploys new releases (using new tags) to the PyPI packages. it required to acquiring a `PYPI_TOKEN` from the https://pypi.org website and adding it in the github repository secrets.
+There is a Github action that deploys new releases (using new tags) to the PyPI packages. (required to obtain a PYPI_TOKEN from the https://pypi.org website and adding it to the Github repository secrets.)
 
 # Quick Start
 
