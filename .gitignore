@@ -131,4 +131,4 @@ dmypy.json
 .vscode
 tmp
 *_local_dev*.py
-example/local_example_dev.py
+/example/local_examples.py
