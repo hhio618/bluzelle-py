@@ -40,6 +40,8 @@ rlp = ">=2.0.1"
 pysha3 = ">=1.0.2"
 typing-extensions = { version = ">=3.7.4", python = "<3.8" }
 requests = "*"
+jsonrpcclient = "^3.3.6"
+websockets = "^9.1"
 
 [tool.poetry.dev-dependencies]
 # Tests

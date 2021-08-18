@@ -5,7 +5,9 @@ import json
 from google.protobuf import json_format
 from google.protobuf.message import Message
 import requests
-
+from jsonrpcclient.clients.websockets_client import WebSocketsClient
+import websockets
+import asyncio
 from bluzelle.codec.tendermint.abci.types_pb2 import RequestInfo, RequestQuery
 from bluzelle.utils import bytes_to_str, is_string
 
@@ -42,6 +44,23 @@ class Tendermint34Client:
         except AttributeError:
             return self.pb_invoke(name)
 
+    async def async_call(self, method, params):
+        print(self.uri)
+        value = str(next(self.request_counter))
+        encoded = json.dumps(
+            {
+                "jsonrpc": "2.0",
+                "method": method,
+                "params": params or [],
+                "id": value,
+            }
+        )
+        print(f"method is:   {method}")
+        print(f"params are:   {params}")
+        async with websockets.connect(self.uri) as ws:
+            response = await WebSocketsClient(ws).request(method_name=method, params=encoded, id=value)
+        print(response.data)
+
     def call(self, method, params):
         """Send json+rpc calls to the tendermint rpc.
 
@@ -64,34 +83,39 @@ class Tendermint34Client:
         )
         print("json+rpc input: \n", encoded)
 
-        # Sending the request.
-        r = self.session.post(self.uri, data=encoded, headers=self.headers, timeout=3)
+        if 'wss' in self.uri or 'ws' in self.uri:
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(self.async_call(method, params))
+            loop.close()
+        else:
+            # Sending the request.
+            r = self.session.post(self.uri, data=encoded, headers=self.headers, timeout=3)
 
-        # Check for status errors.
-        try:
-            r.raise_for_status()
-        except Exception as er:
-            raise er
+            # Check for status errors.
+            try:
+                r.raise_for_status()
+            except Exception as er:
+                raise er
 
-        response = r.content
+            response = r.content
 
-        if is_string(response):
-            result = json.loads(bytes_to_str(response))
-        if "error" in result:
-            raise ValueError(result["error"])
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        print("json+rpc response: ", result)
-        print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+            if is_string(response):
+                result = json.loads(bytes_to_str(response))
+            if "error" in result:
+                raise ValueError(result["error"])
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            print("json+rpc response: ", result)
+            print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 
-        # Check if there is a (code, log) within inner object.
-        result = result["result"]
-        inner = result
-        if "response" in inner:
-            inner = result["response"]
-        if "code" in inner and inner["code"] != 0:
-            raise ValueError(inner["log"])
+            # Check if there is a (code, log) within inner object.
+            result = result["result"]
+            inner = result
+            if "response" in inner:
+                inner = result["response"]
+            if "code" in inner and inner["code"] != 0:
+                raise ValueError(inner["log"])
 
-        return result
+            return result
 
     @property
     def is_connected(self):
