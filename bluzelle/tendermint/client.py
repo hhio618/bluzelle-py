@@ -45,21 +45,10 @@ class Tendermint34Client:
             return self.pb_invoke(name)
 
     async def async_call(self, method, params):
-        print(self.uri)
-        value = str(next(self.request_counter))
-        encoded = json.dumps(
-            {
-                "jsonrpc": "2.0",
-                "method": method,
-                "params": params or [],
-                "id": value,
-            }
-        )
-        print(f"method is:   {method}")
         print(f"params are:   {params}")
-        async with websockets.connect(self.uri) as ws:
-            response = await WebSocketsClient(ws).request(method_name=method, params=encoded, id=value)
-        print(response.data)
+        async with websockets.connect(self.uri+'/websocket') as ws:
+            response = await WebSocketsClient(ws).request(method_name=method, params=params, id_generator=self.request_counter)
+        return response
 
     def call(self, method, params):
         """Send json+rpc calls to the tendermint rpc.
@@ -85,8 +74,12 @@ class Tendermint34Client:
 
         if 'wss' in self.uri or 'ws' in self.uri:
             loop = asyncio.get_event_loop()
-            loop.run_until_complete(self.async_call(method, params))
+            response = loop.run_until_complete(self.async_call(method, params))
             loop.close()
+            print(f"response is {response.text}")
+            result = response.text
+            if "error" in result or "panic" in result:
+                raise ValueError(result["error"])
         else:
             # Sending the request.
             r = self.session.post(self.uri, data=encoded, headers=self.headers, timeout=3)
@@ -115,7 +108,7 @@ class Tendermint34Client:
             if "code" in inner and inner["code"] != 0:
                 raise ValueError(inner["log"])
 
-            return result
+        return result
 
     @property
     def is_connected(self):
