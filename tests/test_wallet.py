@@ -2,6 +2,7 @@ from unittest import mock
 
 from bluzelle.cosmos import generate_wallet, privkey_to_address, privkey_to_pubkey, seed_to_privkey
 from bluzelle.cosmos.typing import Wallet
+
 # come from create
 
 # wallet tests
@@ -62,6 +63,3 @@ def test_generate_wallet():
             "address": "bluzelle1dep39rnnwztpt63jx0htxrkt3lgku2cdkvrlgh",
         }
         assert generate_wallet() == expected_wallet
-
-
-
