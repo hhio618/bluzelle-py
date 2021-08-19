@@ -1,13 +1,14 @@
+import asyncio
 import base64
 import itertools
 import json
 
 from google.protobuf import json_format
 from google.protobuf.message import Message
-import requests
 from jsonrpcclient.clients.websockets_client import WebSocketsClient
+import requests
 import websockets
-import asyncio
+
 from bluzelle.codec.tendermint.abci.types_pb2 import RequestInfo, RequestQuery
 from bluzelle.utils import bytes_to_str, is_string
 
@@ -57,7 +58,7 @@ class Tendermint34Client:
                 "id": value,
             }
         )
-        async with websockets.connect(self.uri+'/websocket') as ws:
+        async with websockets.connect(self.uri + "/websocket") as ws:
             response = await WebSocketsClient(ws).send(encoded)
         return response
 
@@ -83,11 +84,11 @@ class Tendermint34Client:
         )
         print("json+rpc input: \n", encoded)
 
-        if 'wss' in self.uri or 'ws' in self.uri:
+        if "wss" in self.uri or "ws" in self.uri:
             self.loop = asyncio.get_event_loop()
             response = self.loop.run_until_complete(self.async_call(method, params))
             print(f"response is {response.text}")
-            result = json.loads(response.text)['result']
+            result = json.loads(response.text)["result"]
             if "error" in result or "panic" in result:
                 raise ValueError(result["error"])
         else:
@@ -106,9 +107,13 @@ class Tendermint34Client:
                 result = json.loads(bytes_to_str(response))
             if "error" in result:
                 raise ValueError(result["error"])
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            print(
+                ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+            )
             print("json+rpc response: ", result)
-            print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+            print(
+                "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+            )
 
             # Check if there is a (code, log) within inner object.
             result = result["result"]
