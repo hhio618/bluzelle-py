@@ -31,6 +31,9 @@ class Tendermint34Client:
         # Keep a session
         self.session = requests.Session()
 
+        # keep the asyncio event loop
+        self.loop = None
+
         # Request counter for json-rpc
         self.request_counter = itertools.count()
 
@@ -45,9 +48,17 @@ class Tendermint34Client:
             return self.pb_invoke(name)
 
     async def async_call(self, method, params):
-        print(f"params are:   {params}")
+        value = str(next(self.request_counter))
+        encoded = json.dumps(
+            {
+                "jsonrpc": "2.0",
+                "method": method,
+                "params": params or [],
+                "id": value,
+            }
+        )
         async with websockets.connect(self.uri+'/websocket') as ws:
-            response = await WebSocketsClient(ws).request(method_name=method, params=params, id_generator=self.request_counter)
+            response = await WebSocketsClient(ws).send(encoded)
         return response
 
     def call(self, method, params):
@@ -73,11 +84,10 @@ class Tendermint34Client:
         print("json+rpc input: \n", encoded)
 
         if 'wss' in self.uri or 'ws' in self.uri:
-            loop = asyncio.get_event_loop()
-            response = loop.run_until_complete(self.async_call(method, params))
-            loop.close()
+            self.loop = asyncio.get_event_loop()
+            response = self.loop.run_until_complete(self.async_call(method, params))
             print(f"response is {response.text}")
-            result = response.text
+            result = json.loads(response.text)['result']
             if "error" in result or "panic" in result:
                 raise ValueError(result["error"])
         else:
@@ -116,9 +126,13 @@ class Tendermint34Client:
         try:
             response = self.status()
         except IOError:
+            if self.loop:
+                self.loop.close()
             return False
         else:
             if response["node_info"] is None:
+                if self.loop:
+                    self.loop.close()
                 return False
             return True
 
