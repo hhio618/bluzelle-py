@@ -81,7 +81,7 @@ _Each method takes a single parameter as an object (i.e. request), and returns a
 - Crud module query:
 
 ```python
-response = sdk.db.q.Read(
+response = await sdk.db.q.Read(
     QueryReadRequest(
         uuid=uuid,
         key="myKey",
@@ -100,7 +100,7 @@ print(reponse)
 - Bank module query:
 
 ```python
-response = sdk.bank.q.Balance(
+response = await sdk.bank.q.Balance(
     QueryBalanceRequest(
         address=sdk.wallet.address,
         denom="ubnt",
@@ -121,7 +121,7 @@ _The sdk can also send transactions to the chain. Each module has a tx method to
 - Crud module tx:
 
 ```python
-sdk.db.tx.Create(
+await sdk.db.tx.Create(
     MsgCreate(
         creator=sample_creator,
         uuid=uuid,
@@ -156,7 +156,7 @@ Note: IDEs should recognize the types and auto-fill the sdk module hierarchy, an
 _Wrap multiple messages in a single transaction._
 
 ```python
-sdk.db.With_transactions(
+await sdk.db.with_transactions(
     [
         MsgCreate(
             creator=sdk.wallet.address,
@@ -220,7 +220,7 @@ Note: if any one of the messages fail in the function passed to withTransaction,
 Create a key-value in the database.
 
 ```python
-sdk.db.tx.Create(
+await sdk.db.tx.Create(
     MsgCreate(
         creator=sample_creator,
         uuid=uuid,
@@ -254,7 +254,7 @@ Returns: MsgCreateResponse (empty object)
 Delete a key-value in the database.
 
 ```python
-sdk.db.tx.Delete(
+await sdk.db.tx.Delete(
     MsgDelete(creator=sample_creator, uuid="myUuid", key="myKey"),
     timeout=3000,
     metadata=None,
@@ -277,7 +277,7 @@ Returns: MsgDeleteResponse (empty object)
 Renew all the leases of key-values in the specified uuid.
 
 ```python
-response = sdk.db.tx.DeleteAll(creator=sample_creator, uuid="myUuid")
+response = await sdk.db.tx.DeleteAll(creator=sample_creator, uuid="myUuid")
 print(response)
 ```
 
@@ -293,7 +293,7 @@ Returns: Promise=>MsgDeleteAllResponse (empty object)
 Update a set of key-values in the specified uuid.
 
 ```python
-sdk.db.tx.MultiUpdate(
+await sdk.db.tx.MultiUpdate(
     creator=sample_creator,
     uuid="myUuid",
     keyValues=[
@@ -328,7 +328,7 @@ Returns: MsgMultiUpdateResponse (empty object)
 Renew the lease of a key-value in the database.
 
 ```python
-sdk.db.tx.Rename(
+await sdk.db.tx.Rename(
     MsgRename(
         creator=sample_creator, uuid="myUuid", key="existingKey", newKey="renamingKey"
     ),
@@ -354,7 +354,7 @@ Returns: MsgRenameResponse (empty object)
 Renew the lease of a key-value in the database.
 
 ```python
-respons = sdk.db.tx.RenewLease(
+respons = await sdk.db.tx.RenewLease(
     MsgRenewLease(
         creator=sample_creator, uuid="myUuid", key="existingKey", lease=Lease(hours=1)
     ),
@@ -382,7 +382,7 @@ Returns: MsgRenewLeaseResponse (empty object)
 Renew all the leases of key-values in the specified uuid.
 
 ```python
-sdk.db.tx.RenewLeasesAll(
+await sdk.db.tx.RenewLeasesAll(
     MsgRenewLeasesAll(
         creator=sample_creator,
         uuid=uuid,
@@ -411,7 +411,7 @@ Returns: MsgRenewLeasesAllResponse (empty object)
 Update a key-value in the database.
 
 ```python
-sdk.db.tx.Update(
+await sdk.db.tx.Update(
     MsgUpdate(
         creator=sample_creator,
         uuid=uuid,
@@ -445,7 +445,7 @@ Returns: MsgUpdateResponse (empty object)
 Upsert a key-value in the database: create a key-value if the key doesn't exist, update the key-value if the key exists
 
 ```python
-sdk.db.tx.Upsert(
+await sdk.db.tx.Upsert(
     MsgUpsert(
         creator=sample_creator,
         uuid="myUuid",
@@ -480,7 +480,7 @@ Returns: MsgUpsertResponse (empty object)
 Query the total number of key-values in the specified uuid.
 
 ```python
-sdk.db.q.Count(
+await sdk.db.q.Count(
     MsgCount(uuid="myUuid"),
     timeout=3000,
     metadata=None,
@@ -505,7 +505,7 @@ Returns: QueryCountResponse
 Get the remaining lease time of a key-value.
 
 ```python
-response = sdk.db.q.GetLease(
+response = await sdk.db.q.GetLease(
     QueryGetLeaseRequest(
         uuid=uuid,
         key="myKey",
@@ -534,7 +534,7 @@ Returns: QueryGetLeaseResponse
 Get the remaining lease time of a n key-values.
 
 ```python
-response = sdk.db.q.GetNShortestLeases(
+response = await sdk.db.q.GetNShortestLeases(
     QueryGetNShortestLeasesRequest(
         uuid=uuid,
         num=5,
@@ -562,8 +562,8 @@ Returns: QueryGetNShortestLeasesResponse
 
 Check if a key exists in the specified uuid.
 
-```typescript
-sdk.db.q.Has(
+```python
+await sdk.db.q.Has(
   MsgHas((uuid = "myUuid"), (key = "myKey")),
   (timeout = 3000),
   (metadata = None),
@@ -590,7 +590,7 @@ Read the complete set of keys in the specified uuid.
 ###hhio
 
 ```python
-sdk.db.q.Keys(
+await sdk.db.q.Keys(
     MsgKeys(uuid="myUuid", pagination={"start": "key-a", "limit": 50}),
     timeout=3000,
     metadata=None,
@@ -617,7 +617,7 @@ Returns: QueryKeysResponse
 Read the complete set of key-values in the specified uuid.
 
 ```python
-response = sdk.db.q.KeyValues(
+response = await sdk.db.q.KeyValues(
     QueryKeyValuesRequest(uuid=uuid),
     timeout=3000,
     metadata=None,
@@ -644,8 +644,8 @@ Returns: QueryKeyValuesResponse
 Read the complete set of keys by address in the specified uuid.
 ###hhio
 
-```typescript
-sdk.db.q.Keys(
+```python
+await sdk.db.q.Keys(
   MsgKeys((uuid = "myUuid"), (address = sample_creator)),
   (timeout = 3000),
   (metadata = None),
@@ -673,7 +673,7 @@ Returns: QueryMyKeysResponse
 Read a value from the database.
 
 ```python
-response = sdk.db.q.Read(
+response = await sdk.db.q.Read(
     QueryReadRequest(
         uuid=uuid,
         key="myKey",
@@ -702,7 +702,7 @@ Returns: QueryReadResponse
 Search by key in the specified uuid.
 
 ```python
-response = sdk.db.q.Search(
+response = await sdk.db.q.Search(
     QuerySearchRequest(
         uuid=uuid,
         searchString="s",
