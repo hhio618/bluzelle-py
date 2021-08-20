@@ -1,7 +1,7 @@
 import datetime
 import time
 import uuid as u
-
+import asyncio
 from bluzelle.codec.cosmos.bank.v1beta1.query_pb2 import QueryBalanceRequest
 from bluzelle.codec.crud.lease_pb2 import Lease
 from bluzelle.codec.crud.query_pb2 import (
@@ -46,8 +46,8 @@ def populate_uuid(sdk):
     )
 
 
-def diff_cost_with_different_lease(sdk):
-    response_1 = sdk.bank.q.Balance(
+async def diff_cost_with_different_lease(sdk):
+    response_1 = await sdk.bank.q.Balance(
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom="ubnt",
@@ -59,7 +59,7 @@ def diff_cost_with_different_lease(sdk):
         compression=False,
     )
     first_cost = int(response_1.balance.amount)
-    sdk.db.tx.Create(
+    await sdk.db.tx.Create(
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -73,7 +73,7 @@ def diff_cost_with_different_lease(sdk):
         wait_for_ready=True,
         compression=False,
     )
-    response_2 = sdk.bank.q.Balance(
+    response_2 = await sdk.bank.q.Balance(
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom="ubnt",
@@ -86,7 +86,7 @@ def diff_cost_with_different_lease(sdk):
     )
     first_cost -= int(response_2.balance.amount)
     # creating another key
-    response_3 = sdk.bank.q.Balance(
+    response_3 = await sdk.bank.q.Balance(
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom="ubnt",
@@ -98,7 +98,7 @@ def diff_cost_with_different_lease(sdk):
         compression=False,
     )
     second_cost = int(response_3.balance.amount)
-    sdk.db.tx.Create(
+    await sdk.db.tx.Create(
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -112,7 +112,7 @@ def diff_cost_with_different_lease(sdk):
         wait_for_ready=True,
         compression=False,
     )
-    response_4 = sdk.bank.q.Balance(
+    response_4 = await sdk.bank.q.Balance(
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom="ubnt",
@@ -128,8 +128,8 @@ def diff_cost_with_different_lease(sdk):
     return second_cost - first_cost
 
 
-def diff_cost_equal_message_size(sdk):
-    response_1 = sdk.bank.q.Balance(
+async def diff_cost_equal_message_size(sdk):
+    response_1 = await sdk.bank.q.Balance(
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom="ubnt",
@@ -141,7 +141,7 @@ def diff_cost_equal_message_size(sdk):
         compression=False,
     )
     first_cost = int(response_1.balance.amount)
-    sdk.db.tx.Create(
+    await sdk.db.tx.Create(
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -155,7 +155,7 @@ def diff_cost_equal_message_size(sdk):
         wait_for_ready=True,
         compression=False,
     )
-    response_2 = sdk.bank.q.Balance(
+    response_2 = await sdk.bank.q.Balance(
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom="ubnt",
@@ -168,7 +168,7 @@ def diff_cost_equal_message_size(sdk):
     )
     first_cost -= int(response_2.balance.amount)
     # creating another key
-    response_3 = sdk.bank.q.Balance(
+    response_3 = await sdk.bank.q.Balance(
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom="ubnt",
@@ -180,7 +180,7 @@ def diff_cost_equal_message_size(sdk):
         compression=False,
     )
     second_cost = int(response_3.balance.amount)
-    sdk.db.tx.Create(
+    await sdk.db.tx.Create(
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -194,7 +194,7 @@ def diff_cost_equal_message_size(sdk):
         wait_for_ready=True,
         compression=False,
     )
-    response_4 = sdk.bank.q.Balance(
+    response_4 = await sdk.bank.q.Balance(
         QueryBalanceRequest(
             address=sdk.wallet.address,
             denom="ubnt",
@@ -210,8 +210,8 @@ def diff_cost_equal_message_size(sdk):
     return second_cost - first_cost
 
 
-def main(sdk):
-    sdk.db.tx.Create(
+async def main(sdk):
+    await sdk.db.tx.Create(
         MsgCreate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -226,7 +226,7 @@ def main(sdk):
         compression=False,
     )
     print(f"Created key: myKey, value: myValue in {datetime.datetime.now()}")
-    response = sdk.db.q.Read(
+    response = await sdk.db.q.Read(
         QueryReadRequest(
             uuid=uuid,
             key="myKey",
@@ -239,7 +239,7 @@ def main(sdk):
     )
     print(f"Read key: myKey, value: {response.value} in {datetime.datetime.now()}")
 
-    sdk.db.tx.Update(
+    await sdk.db.tx.Update(
         MsgUpdate(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -254,7 +254,7 @@ def main(sdk):
         compression=False,
     )
 
-    response = sdk.db.q.Read(
+    response = await sdk.db.q.Read(
         QueryReadRequest(
             uuid=uuid,
             key="myKey",
@@ -266,7 +266,7 @@ def main(sdk):
         compression=False,
     )
     print(f"Update key: myKey, value: {response.value} in {datetime.datetime.now()}")
-    response = sdk.db.q.GetLease(
+    response = await sdk.db.q.GetLease(
         QueryGetLeaseRequest(
             uuid=uuid,
             key="myKey",
@@ -282,7 +282,7 @@ def main(sdk):
     print("Creating 3 new key-value pairs")
 
     # fetch the inserted values
-    response = sdk.db.q.KeyValues(
+    response = await sdk.db.q.KeyValues(
         QueryKeyValuesRequest(uuid=uuid),
         timeout=3000,
         metadata=None,
@@ -292,13 +292,13 @@ def main(sdk):
     )
     print(f"Reading all values in {datetime.datetime.now()}, {response.keyValues}")
 
-    cost_difference = diff_cost_with_different_lease(sdk)
+    cost_difference = await diff_cost_with_different_lease(sdk)
     print(f"Trueotal cost difference for 2 create with different lease {cost_difference}")
     #
-    cost_difference = diff_cost_equal_message_size(sdk)
+    cost_difference = await diff_cost_equal_message_size(sdk)
     print(f"Total cost difference for 2 equal size creates is {cost_difference}")
 
-    response = sdk.db.q.Search(
+    response = await sdk.db.q.Search(
         QuerySearchRequest(
             uuid=uuid,
             searchString="s",
@@ -310,7 +310,7 @@ def main(sdk):
         compression=False,
     )
     print(f'Key-values matching the search string "s": {response.keyValues} ')
-    response = sdk.db.q.GetNShortestLeases(
+    response = await sdk.db.q.GetNShortestLeases(
         QueryGetNShortestLeasesRequest(
             uuid=uuid,
             num=5,
@@ -323,7 +323,7 @@ def main(sdk):
     )
 
     print(f"Getting 5 shortest lease {response}")
-    sdk.db.tx.RenewLeasesAll(
+    await sdk.db.tx.RenewLeasesAll(
         MsgRenewLeasesAll(
             creator=sdk.wallet.address,
             uuid=uuid,
@@ -336,7 +336,7 @@ def main(sdk):
         compression=False,
     )
     print("Update leases to 10 seconds for all key-values")
-    response = sdk.db.q.GetNShortestLeases(
+    response = await sdk.db.q.GetNShortestLeases(
         QueryGetNShortestLeasesRequest(
             uuid=uuid,
             num=6,
@@ -349,7 +349,7 @@ def main(sdk):
     )
     print(f"Getting 6 shortest lease {response}")
     time.sleep(10)
-    response = sdk.db.q.KeyValues(
+    response = await sdk.db.q.KeyValues(
         QueryKeyValuesRequest(uuid=uuid),
         timeout=3000,
         metadata=None,
@@ -370,4 +370,6 @@ if __name__ == "__main__":
         max_gas=100000000,
         gas_price=0.002,
     )
-    main(sdk)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main(sdk))
+    loop.close()
