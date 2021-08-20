@@ -1,7 +1,7 @@
-import asyncio
 import base64
 import itertools
 import json
+import logging
 
 from google.protobuf import json_format
 from google.protobuf.message import Message
@@ -10,7 +10,7 @@ import requests
 import websockets
 
 from bluzelle.codec.tendermint.abci.types_pb2 import RequestInfo, RequestQuery
-from bluzelle.utils import bytes_to_str, is_string
+from bluzelle.utils import bytes_to_str, get_logger, is_string
 
 MaxReadInBytes = 64 * 1024  # Max we'll consume on a read stream
 AGENT = "bluzelle-py/0.1"
@@ -25,7 +25,7 @@ class Tendermint34Client:
     transaction to the blockchain network.
     """
 
-    def __init__(self, host: str, port: int):
+    def __init__(self, host: str, port: int, logging_level: int = logging.INFO):
         # Tendermint endpoint
         self.uri = "{}:{}".format(host, port)
 
@@ -41,6 +41,14 @@ class Tendermint34Client:
         # request headers
         self.headers = {"user-agent": AGENT, "Content-Type": "application/json"}
 
+        # logger
+        self.logger = get_logger("tendermint", logging_level)
+
+        # Determing the request sender function based on the uri schema.
+        self.send_request_func = self.send_http_request
+        if "wss" in self.uri or "ws" in self.uri:
+            self.send_request_func = self.send_wss_request
+
     def __getattribute__(self, name):
         """Redirect extra calls to the pb_invoke method."""
         try:
@@ -48,19 +56,26 @@ class Tendermint34Client:
         except AttributeError:
             return self.pb_invoke(name, None)
 
-    async def async_call(self, method, params):
-        value = str(next(self.request_counter))
-        encoded = json.dumps(
-            {
-                "jsonrpc": "2.0",
-                "method": method,
-                "params": params or [],
-                "id": value,
-            }
-        )
+    async def send_wss_request(self, encoded_data):
+        """Sending wss request.
+
+        Args:
+          encoded_data: encoded json+rpc request data.
+        """
         async with websockets.connect(self.uri + "/websocket") as ws:
-            response = await WebSocketsClient(ws).send(encoded)
+            response = await WebSocketsClient(ws).send(encoded_data)
+
+        # For compatibility with http responses
+        response.content = response.text
         return response
+
+    async def send_http_request(self, encoded_data):
+        """Sending http request.
+
+        Args:
+          encoded_data: encoded json+rpc request data.
+        """
+        return self.session.post(self.uri, data=encoded_data, headers=self.headers, timeout=3)
 
     async def call(self, method, params):
         """Send json+rpc calls to the tendermint rpc.
@@ -74,7 +89,7 @@ class Tendermint34Client:
         """
 
         value = str(next(self.request_counter))
-        encoded = json.dumps(
+        encoded_data = json.dumps(
             {
                 "jsonrpc": "2.0",
                 "method": method,
@@ -82,47 +97,32 @@ class Tendermint34Client:
                 "id": value,
             }
         )
-        print("json+rpc input: \n", encoded)
+        self.logger.debug("json+rpc request, request=%s", encoded_data)
 
-        if "wss" in self.uri or "ws" in self.uri:
+        # Sending json+rpc request using the default request sender function.
+        r = await self.send_request_func(encoded_data)
 
-            response = await self.async_call(method, params)
-            print(f"response is {response.text}")
-            result = json.loads(response.text)["result"]
-            if "error" in result or "panic" in result:
-                raise ValueError(result["error"])
-        else:
-            # Sending the request.
-            r = self.session.post(self.uri, data=encoded, headers=self.headers, timeout=3)
+        # Check for status errors.
+        # try:
+        #    r.raise_for_status()
+        # except Exception as er:
+        #    raise er
 
-            # Check for status errors.
-            try:
-                r.raise_for_status()
-            except Exception as er:
-                raise er
+        response = r.content
 
-            response = r.content
+        if is_string(response):
+            result = json.loads(bytes_to_str(response))
+        if "error" in result:
+            raise ValueError(result["error"])
 
-            if is_string(response):
-                result = json.loads(bytes_to_str(response))
-            if "error" in result:
-                raise ValueError(result["error"])
-            print(
-                ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-            )
-            print("json+rpc response: ", result)
-            print(
-                "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-            )
-
-            # Check if there is a (code, log) within inner object.
-            result = result["result"]
-            inner = result
-            if "response" in inner:
-                inner = result["response"]
-            if "code" in inner and inner["code"] != 0:
-                raise ValueError(inner["log"])
-
+        self.logger.debug("json+rpc response, result=%s", result)
+        # Check if there is a (code, log) within inner object.
+        result = result["result"]
+        inner = result
+        if "response" in inner:
+            inner = result["response"]
+        if "code" in inner and inner["code"] != 0:
+            raise ValueError(inner["log"])
         return result
 
     @property
@@ -172,9 +172,9 @@ class Tendermint34Client:
           prove: boolean, default to false.
         """
         req = RequestQuery(path=path, data=data, height=height, prove=prove)
-        print(f"req is : {req}")
+        self.logger.debug(f"req={req}")
         res = await self.pb_invoke("abci_query", req)
-        print(f"res is : {res}")
+        self.logger.debug(f"res={res}")
         return res
 
     def abci_info(self):
@@ -194,4 +194,3 @@ class Tendermint34Client:
             payload["data"] = base64.b64decode(payload["data"]).hex()
         result = await self.call(method_name, payload)
         return result["response"]["value"]
-

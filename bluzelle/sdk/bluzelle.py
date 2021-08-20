@@ -1,3 +1,4 @@
+import logging
 from typing import Generic, TypeVar
 
 from bluzelle.client import QueryClient, TransactionClient
@@ -18,6 +19,7 @@ from bluzelle.cosmos import (
 # (https://github.com/hukkin/cosmospy) to handle customized bluzelle transactions.
 from bluzelle.cosmos.typing import Wallet
 from bluzelle.tendermint import Tendermint34Client
+from bluzelle.utils import get_logger
 
 Q = TypeVar("Q")
 TX = TypeVar("TX")
@@ -34,7 +36,15 @@ class Bluzelle:
     wallet: Wallet
     """Bluzelle is the main class for accessing Bluzelle SDKs."""
 
-    def __init__(self, mnemonic: str, host: str, port: int, max_gas: int, gas_price: float):
+    def __init__(
+        self,
+        mnemonic: str,
+        host: str,
+        port: int,
+        max_gas: int,
+        gas_price: float,
+        logging_level: int = logging.INFO,
+    ):
         """Crating new Bluzelle instance.
 
         Args:
@@ -67,15 +77,22 @@ class Bluzelle:
                 self.wallet.address = addr
                 self.wallet.public_key = pubkey
             except BIP32DerivationError:
-                print("No valid private key in this derivation path!")
+                get_logger("bluzelle").error("No valid private key in this derivation path!")
 
         # Creating a Tendermint RPC client.
-        self.tendermint34Client = self.create_tendermint_client(host=host, port=port)
+        self.tendermint34Client = self.create_tendermint_client(
+            host=host, port=port, logging_level=logging_level
+        )
 
         # Creating grpc Query clients.
-        self.query_client = QueryClient(self.tendermint34Client)
+        self.query_client = QueryClient(self.tendermint34Client, logging_level)
         self.tx_client = TransactionClient(
-            self.tendermint34Client, self.query_client, self.wallet, max_gas, gas_price
+            self.tendermint34Client,
+            self.query_client,
+            self.wallet,
+            max_gas,
+            gas_price,
+            logging_level,
         )
 
         # Defining the db SDK.
@@ -90,7 +107,7 @@ class Bluzelle:
         self.bank.with_transactions = self.tx_client.with_transactions
         self.bank.tx = BankMsgStub(self.tx_client)
 
-    def create_tendermint_client(self, host, port):
+    def create_tendermint_client(self, host, port, logging_level: int):
         """Tendermint is the transport for making grpc calls, sending new tx,
         ..."""
-        return Tendermint34Client(host, port)
+        return Tendermint34Client(host, port, logging_level)

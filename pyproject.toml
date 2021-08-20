@@ -42,6 +42,8 @@ typing-extensions = { version = ">=3.7.4", python = "<3.8" }
 requests = "*"
 jsonrpcclient = "^3.3.6"
 websockets = "^9.1"
+colorlib = "^0.1.0"
+anyio = "^3.3.0"
 
 [tool.poetry.dev-dependencies]
 # Tests

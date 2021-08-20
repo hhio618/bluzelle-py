@@ -1,3 +1,4 @@
+import logging
 import time
 from typing import List
 
@@ -14,6 +15,7 @@ from bluzelle.cosmos import Transaction
 from bluzelle.cosmos._sign_mode_handler import DirectSignModeHandler
 from bluzelle.cosmos._wallet import Wallet
 from bluzelle.tendermint import Tendermint34Client
+from bluzelle.utils import get_logger
 from .rpc import Callable, RpcChannel
 
 
@@ -34,7 +36,9 @@ class TxCallable(Callable):
         # Callback function to take care of broadcasting a signed tx.
         self.sender = sender
 
-    async def _blocking(self, request, timeout, metadata, credentials, wait_for_ready, compression):
+    async def _blocking(
+        self, request, timeout, metadata, credentials, wait_for_ready, compression
+    ):
         return await self.sender(request)
 
 
@@ -51,6 +55,7 @@ class TransactionClient(RpcChannel):
         wallet: Wallet,
         max_gas: int,
         gas_price: float,
+        logging_level: int = logging.INFO,
     ):
         """Creating a new TransactionClient.
 
@@ -66,6 +71,8 @@ class TransactionClient(RpcChannel):
         self.max_gas = max_gas
         self.gas_price = gas_price
         self.query_client = query_client
+        self.logger = get_logger("tx-client", logging_level)
+
         super().__init__(tendermint34Client)
 
     def unary_unary(self, method, request_serializer, response_deserializer):
@@ -123,9 +130,7 @@ class TransactionClient(RpcChannel):
             sign_mode_handler=DirectSignModeHandler(),
         )
 
-        print("#####################################")
-        print(signed_tx)
-        print("#####################################")
+        self.logger.debug("signed transaction, signed_tx=%s", signed_tx)
         return signed_tx
 
     async def submit_transaction(self, signed_tx: bytes) -> str:
@@ -164,7 +169,7 @@ class TransactionClient(RpcChannel):
                     raise ValueError(
                         f"call failed with code {code} (log: {log}, codespace: {code_space}))"
                     )
-                print(response)
+                self.logger.debug("tx search result, response=%s", response)
                 return response
             # Waiting 10 seconds before making another rpc call.
             time.sleep(10)
@@ -195,6 +200,7 @@ class TransactionClient(RpcChannel):
             raise ValueError(
                 "Resulting account from abci_query should be equal to the wallet address!"
             )
+        self.logger.debug("account data to be included in the transaction, account=%s", account)
         return account
 
     async def get_chain_id(self) -> str:

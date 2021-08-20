@@ -1,7 +1,9 @@
+import asyncio
 import datetime
+import logging
 import time
 import uuid as u
-import asyncio
+
 from bluzelle.codec.cosmos.bank.v1beta1.query_pb2 import QueryBalanceRequest
 from bluzelle.codec.crud.lease_pb2 import Lease
 from bluzelle.codec.crud.query_pb2 import (
@@ -365,10 +367,11 @@ if __name__ == "__main__":
         mnemonic="space dilemma domain payment snap crouch arrange"
         " fantasy draft shaft fitness rain habit dynamic tip "
         "faith mushroom please power kick impulse logic wet cricket",
-        host="https://client.sentry.testnet.private.bluzelle.com",
+        host="wss://client.sentry.testnet.private.bluzelle.com",
         port=26657,
         max_gas=100000000,
         gas_price=0.002,
+        logging_level=logging.DEBUG,
     )
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main(sdk))

@@ -1,4 +1,5 @@
 from base64 import b64decode
+import logging
 from typing import Any
 
 from .rpc import Callable, RpcChannel
@@ -23,6 +24,10 @@ class QueryClient(RpcChannel):
 
     query requests and Tendermint34Client.abci_query.
     """
+
+    def __init__(self, tendermint34Client, logging_level: int = logging.INFO):
+        super().__init__(tendermint34Client)
+        self.logging_level = logging_level
 
     def unary_unary(self, method, request_serializer, response_deserializer) -> Any:
         """Custom implementation of grpc Channel that uses tendermint client

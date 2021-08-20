@@ -1,1 +1,1 @@
-from .utils import bytes_to_str, is_string  # noqa: F401
+from .utils import bytes_to_str, get_logger, is_string  # noqa: F401

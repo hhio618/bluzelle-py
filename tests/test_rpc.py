@@ -223,7 +223,7 @@ class Tendermint34ClientMock(Tendermint34Client):
 
 
 class MockBluzelle(Bluzelle):
-    def create_tendermint_client(self, host, port):
+    def create_tendermint_client(self, host, port, logging_level):
         return Tendermint34ClientMock(host, port)
 
 
@@ -242,9 +242,9 @@ class TestRpc:
             gas_price=0.002,
         )
 
-    def test_create_transaction(self):
+    async def test_create_transaction(self):
         sample_creator = "sample_creator"
-        response = self.sdk.db.tx.Create(
+        response = await self.sdk.db.tx.Create(
             MsgCreate(
                 creator=sample_creator,
                 uuid=uuid,
@@ -263,8 +263,8 @@ class TestRpc:
             == "C32C2FEA3F9E7B592C7EA1449356BF2CB3280423AA6BF20B9D5954D38ACC6143"
         )
 
-    def test_read_transaction(self):
-        response = self.sdk.db.q.Read(
+    async def test_read_transaction(self):
+        response = await self.sdk.db.q.Read(
             QueryReadRequest(
                 uuid=uuid,
                 key="myKey",
@@ -277,9 +277,9 @@ class TestRpc:
         )
         assert response.value == b"myValue"
 
-    def test_update_transaction(self):
+    async def test_update_transaction(self):
         sample_creator = "sample_creator"
-        response = self.sdk.db.tx.Update(
+        response = await self.sdk.db.tx.Update(
             MsgUpdate(
                 creator=sample_creator,
                 uuid=uuid,
@@ -298,9 +298,9 @@ class TestRpc:
             == "2EB26782D3EE9C0E9DEC09033A6C5B77A83C1592F7C505BC8D1DBDB6485A1025"
         )
 
-    def test_query_balance_request(self):
+    async def test_query_balance_request(self):
         sample_creator = "sample_creator"
-        response = self.sdk.bank.q.Balance(
+        response = await self.sdk.bank.q.Balance(
             QueryBalanceRequest(
                 address=sample_creator,
                 denom="ubnt",

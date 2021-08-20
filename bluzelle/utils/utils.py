@@ -1,16 +1,22 @@
 import collections
 from io import BytesIO
+import logging
 from math import ceil
 import os
 import os.path
 from pathlib import Path
 
+import colorlog
 from google.protobuf.message import Message
 from sha3 import keccak_256
 
-def get_logger(name: str) -> logging.Logger:
-    """
-    Create a (colored) logger with the given name
+
+def get_logger(name: str, level: int) -> logging.Logger:
+    """Create a (colored) logger with the given name.
+
+    Args:
+      name: logger specific name
+      level: logging level
     """
     logger = logging.getLogger(name)
 
@@ -35,9 +41,10 @@ def get_logger(name: str) -> logging.Logger:
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
     logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(level)
 
     return logger
+
 
 def encode_varint(number: int) -> bytes:
     """Encode varint into bytes."""
