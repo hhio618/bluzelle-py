@@ -8,6 +8,36 @@ from pathlib import Path
 from google.protobuf.message import Message
 from sha3 import keccak_256
 
+def get_logger(name: str) -> logging.Logger:
+    """
+    Create a (colored) logger with the given name
+    """
+    logger = logging.getLogger(name)
+
+    if logger.hasHandlers():
+        return logger
+
+    formatter = colorlog.ColoredFormatter(
+        "%(log_color)s%(levelname)-8s%(reset)s %(white)s%(message)s",
+        datefmt=None,
+        reset=True,
+        log_colors={
+            "DEBUG": "cyan",
+            "INFO": "green",
+            "WARNING": "yellow",
+            "ERROR": "red",
+            "CRITICAL": "red,bg_white",
+        },
+        secondary_log_colors={},
+        style="%",
+    )
+
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
+
+    return logger
 
 def encode_varint(number: int) -> bytes:
     """Encode varint into bytes."""

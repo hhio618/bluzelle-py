@@ -70,7 +70,7 @@ class Bluzelle:
                 print("No valid private key in this derivation path!")
 
         # Creating a Tendermint RPC client.
-        self.tendermint34Client = Tendermint34Client(host, port)
+        self.tendermint34Client = self.create_tendermint_client(host=host, port=port)
 
         # Creating grpc Query clients.
         self.query_client = QueryClient(self.tendermint34Client)
@@ -89,3 +89,8 @@ class Bluzelle:
         self.bank.q = BankQueryStub(self.query_client)
         self.bank.with_transactions = self.tx_client.with_transactions
         self.bank.tx = BankMsgStub(self.tx_client)
+
+    def create_tendermint_client(self, host, port):
+        """Tendermint is the transport for making grpc calls, sending new tx,
+        ..."""
+        return Tendermint34Client(host, port)

@@ -35,7 +35,7 @@ class TxCallable(Callable):
         self.sender = sender
 
     async def _blocking(self, request, timeout, metadata, credentials, wait_for_ready, compression):
-        await self.sender(request)
+        return await self.sender(request)
 
 
 class TransactionClient(RpcChannel):
@@ -89,7 +89,7 @@ class TransactionClient(RpcChannel):
         tx_hash = await self.submit_transaction(signed_tx)
 
         # Block until the transaction is included in a block successfully or failed.
-        await self.wait_transaction_done(tx_hash)
+        return await self.wait_transaction_done(tx_hash)
 
     async def prepair_transaction(self, messages: List[Message], memo: str):
         """Creating a offline signed transaction using input messages and
@@ -152,7 +152,6 @@ class TransactionClient(RpcChannel):
         """
         # Query the transaction using its hash.
         timeout = time.time() + 60 * 10  # 10 minutes from now
-        time.sleep(10)
         while time.time() < timeout:
             response = await self.tendermint34Client.tx_search(query=f"tx.hash='{hash}'")
             if int(response["total_count"]) > 0:
@@ -165,7 +164,8 @@ class TransactionClient(RpcChannel):
                     raise ValueError(
                         f"call failed with code {code} (log: {log}, codespace: {code_space}))"
                     )
-                return
+                print(response)
+                return response
             # Waiting 10 seconds before making another rpc call.
             time.sleep(10)
 
