@@ -46,7 +46,7 @@ class Tendermint34Client:
         try:
             return object.__getattribute__(self, name)
         except AttributeError:
-            return self.pb_invoke(name)
+            return self.pb_invoke(name, None)
 
     async def async_call(self, method, params):
         value = str(next(self.request_counter))
@@ -62,7 +62,7 @@ class Tendermint34Client:
             response = await WebSocketsClient(ws).send(encoded)
         return response
 
-    def call(self, method, params):
+    async def call(self, method, params):
         """Send json+rpc calls to the tendermint rpc.
 
         Args:
@@ -85,8 +85,8 @@ class Tendermint34Client:
         print("json+rpc input: \n", encoded)
 
         if "wss" in self.uri or "ws" in self.uri:
-            self.loop = asyncio.get_event_loop()
-            response = self.loop.run_until_complete(self.async_call(method, params))
+
+            response = await self.async_call(method, params)
             print(f"response is {response.text}")
             result = json.loads(response.text)["result"]
             if "error" in result or "panic" in result:
@@ -162,7 +162,7 @@ class Tendermint34Client:
         }
         return self.call("tx_search", req)
 
-    def abci_query(self, path: str, data: str, height: int = None, prove: bool = False):
+    async def abci_query(self, path: str, data: str, height: int = None, prove: bool = False):
         """Query the blockchain data using standard blockchain abci.
 
         Args:
@@ -172,25 +172,26 @@ class Tendermint34Client:
           prove: boolean, default to false.
         """
         req = RequestQuery(path=path, data=data, height=height, prove=prove)
-        return self.pb_invoke("abci_query")(req)
+        print(f"req is : {req}")
+        res = await self.pb_invoke("abci_query", req)
+        print(f"res is : {res}")
+        return res
 
     def abci_info(self):
-        return self.pb_invoke("abci_info")(RequestInfo())
+        return self.pb_invoke("abci_info", RequestInfo())
 
     def status(self):
         """Will be used to query the blockchain general information like chain
         id, ..."""
         return self.call("status", [])
 
-    def pb_invoke(self, method_name) -> bytes:
+    async def pb_invoke(self, method_name, req: Message or None) -> bytes:
         """Converting predefined grpc Message's to a payload and make the rpc
         call."""
 
-        def wrapper(req: Message):
-            payload = json_format.MessageToDict(req)
-            if method_name == "abci_query":
-                payload["data"] = base64.b64decode(payload["data"]).hex()
-            result = self.call(method_name, payload)
-            return result["response"]["value"]
+        payload = json_format.MessageToDict(req)
+        if method_name == "abci_query":
+            payload["data"] = base64.b64decode(payload["data"]).hex()
+        result = await self.call(method_name, payload)
+        return result["response"]["value"]
 
-        return wrapper

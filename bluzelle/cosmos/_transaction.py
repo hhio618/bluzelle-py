@@ -94,7 +94,7 @@ class Transaction:
         self._tx.auth_info.signer_infos.extend(signer_infos)
         return self
 
-    def create(self):
+    async def create(self):
         """Creates a raw transaction.
 
         Args:
@@ -127,10 +127,11 @@ class Transaction:
         sig_data = SingleSignatureData(sign_mode=self._sign_mode, signature=None)
 
         # Set SignatureV2 with empty signatures, to set correct signer infos.
+        acc = self._account
         sig = SignatureV2(
             pub_key=self._pubkey,
             data=sig_data,
-            sequence=self._account.sequence,
+            sequence=acc.sequence,
         )
         self._set_signatures([sig])
         return self

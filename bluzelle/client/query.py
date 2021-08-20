@@ -5,7 +5,7 @@ from .rpc import Callable, RpcChannel
 
 
 class QueryCallable(Callable):
-    def _blocking(
+    async def _blocking(
         self, request, timeout, metadata, credentials, wait_for_ready, compression
     ) -> Any:
         """request's path will be derived from its info, and an abci_query will
@@ -14,7 +14,7 @@ class QueryCallable(Callable):
         sent using derived path and request's value.
         """
         path = self.method[:]
-        value = self.tendermint34Client.abci_query(path, self.request_serializer(request))
+        value = await self.tendermint34Client.abci_query(path, self.request_serializer(request))
         return self.response_deserializer(b64decode(value))
 
 
