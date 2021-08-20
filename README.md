@@ -55,9 +55,12 @@ Note: if you want to run examples in library folder, place the codes inside a fi
 
 ### Websockets vs. HTTPS
 
-- Currently the sdk supports only https connections to the Bluzelle testnet
+- The sdk supports both https and wss connections to the Bluzelle testnet
 - For **https** pass the url **https://client.sentry.testnet.private.bluzelle.com:26657** to the bluzelle constructor.
-- Support for **websockets** (wss://client.sentry.testnet.private.bluzelle.com:26657) will be added soon.
+- For **websockets** pass the url **wss://client.sentry.testnet.private.bluzelle.com:26657**.
+
+Note: for both version first create a sdk instance then use a asyncio loop to run the program.
+For more details on this see example/example.py.
 
 # Usage
 
