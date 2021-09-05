@@ -1,4 +1,13 @@
-from bluzelle.utils import bytes_to_str, is_string
+from logging import DEBUG, StreamHandler
+
+from bluzelle.utils import bytes_to_str, get_logger, is_string
+
+
+def test_get_logger():
+    logger1 = get_logger("logger1", DEBUG)
+    assert logger1.level == DEBUG
+    assert logger1.hasHandlers() is True
+    assert isinstance(logger1.handlers[0], StreamHandler)
 
 
 def test_is_string():

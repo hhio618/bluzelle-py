@@ -12,7 +12,7 @@ def get_logger(name: str, level: int) -> logging.Logger:
     """
     logger = logging.getLogger(name)
 
-    if logger.hasHandlers():
+    if logger.hasHandlers() and len(logger.handlers) > 0:
         return logger
 
     formatter = colorlog.ColoredFormatter(
