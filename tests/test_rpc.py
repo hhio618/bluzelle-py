@@ -1,4 +1,3 @@
-from _ast import List
 from base64 import b64encode
 
 import pytest
@@ -12,15 +11,12 @@ from bluzelle.codec.crud.query_pb2 import QueryReadRequest
 from bluzelle.codec.crud.tx_pb2 import MsgCreate, MsgUpdate
 from bluzelle.sdk.bluzelle import Bluzelle
 from bluzelle.tendermint import Tendermint34Client
-from bluzelle.codec.cosmos.tx.signing.v1beta1.signing_pb2 import SIGN_MODE_DIRECT
-from bluzelle.cosmos import Transaction
-from bluzelle.codec.cosmos.auth.v1beta1.auth_pb2 import BaseAccount
 
 balance = Coin(denom=b"ubnt", amount=b"99946246")
 
 
 class Tendermint34ClientMock(Tendermint34Client):
-    def call(self, method, params):
+    async def call(self, method, params):
         # Handle methods with empty params, like the `status` method.
         if len(params) == 0:
             # Status request
@@ -233,16 +229,6 @@ class MockBluzelle(Bluzelle):
         return Tendermint34ClientMock(host, port)
 
 
-class MockTransaction(Transaction):
-
-    async def create(self):
-        return self
-
-    def _sign(self, input_bytes) -> str:
-        return b'Nn\xa9\xed\xc8\xdb\xbf%\x1d1Y\xc1\xa3\x8d\x04SR94\xaf\x1b\\\xe7\x07\xfa\x96B\xafX\xa7\xc2\x99Up-M\xb3\xa7' \
-               b'\xeb\xc6\xf1\xdc\x14\xf7>\x07\xb6l\x0f\x96\xa2\x18\t\x96\xfb\x89\x18\xe0\x1aC\x15"\xd7\xa9'
-
-
 uuid = "dummy-uuid"
 
 
@@ -258,6 +244,7 @@ class TestRpc:
             gas_price=0.002,
         )
 
+    @pytest.mark.asyncio
     async def test_create_transaction(self):
         sample_creator = "sample_creator"
         response = await self.sdk.db.tx.Create(
@@ -279,6 +266,7 @@ class TestRpc:
             == "C32C2FEA3F9E7B592C7EA1449356BF2CB3280423AA6BF20B9D5954D38ACC6143"
         )
 
+    @pytest.mark.asyncio
     async def test_read_transaction(self):
         response = await self.sdk.db.q.Read(
             QueryReadRequest(
@@ -293,6 +281,7 @@ class TestRpc:
         )
         assert response.value == b"myValue"
 
+    @pytest.mark.asyncio
     async def test_update_transaction(self):
         sample_creator = "sample_creator"
         response = await self.sdk.db.tx.Update(
@@ -314,6 +303,7 @@ class TestRpc:
             == "2EB26782D3EE9C0E9DEC09033A6C5B77A83C1592F7C505BC8D1DBDB6485A1025"
         )
 
+    @pytest.mark.asyncio
     async def test_query_balance_request(self):
         sample_creator = "sample_creator"
         response = await self.sdk.bank.q.Balance(
@@ -328,33 +318,3 @@ class TestRpc:
             compression=False,
         )
         assert response.balance.amount == balance.amount
-
-    @pytest.mark.asyncio
-    async def test_transaction_sign(self):
-
-        messages = [
-            MsgCreate(
-                creator="sample_creator",
-                uuid=uuid,
-                key="myKey",
-                value="myValue".encode("utf-8"),
-                lease=Lease(hours=1),
-            ),
-        ]
-
-        tx = await MockTransaction(
-            account=BaseAccount.FromString(b'\n/bluzelle1qlme4k6gdrw25vues9kcz3nm6w8c38ml82kz5k\x12F\n\x1f/cosmos.crypto.secp256k1.PubKey\x12#\n!\x03\x8b\x19\x0f\xf4v^\x089AIue\x0f\xd0\xd5um\x14\x9a\x8b\t{\xefi\xbe\xc3\xb3\xc0Ar\xdd\xc8\x18\xbe\x02 \xbb\x01'),
-            messages=messages,
-            sign_mode=SIGN_MODE_DIRECT,
-            privkey=b'\x95|-Z\xbe.\x1f\\\xd8e\xc7?\xca\xc6\xb5D\xac~%Xd\xbeX\xf8\xd4\x85\xcd`\xcc\xa1\xb7#',
-            fee=3009,
-            memo="mimo",
-            chain_id="GVGHVY",
-        ).create()
-        tx_sign_val = tx._sign(b'\n\x91\x01\n\x8e\x01\n\x1f/bluzelle.curium.crud.MsgCreate\x12k\n/bluzelle1qlme4k6gdrw25vues9kcz3nm6w8c38ml82kz5k'
-                               b'\x12$2daa5089-abe3-431f-8b8a-c58c130030a8\x1a\x05myKey"\x07myValue*\x02\x18\x01\x12j\nQ\nF\n\x1f/cosmos.crypto.secp256k1.PubKey'
-                               b'\x12#\n!\x03\x8b\x19\x0f\xf4v^\x089AIue\x0f\xd0\xd5um\x14\x9a\x8b\t{\xefi\xbe\xc3\xb3\xc0Ar\xdd\xc8\x12\x04\n\x02\x08\x01\x18\xc7\
-                               x01\x12\x15\n\x0e\n\x04ubnt\x12\x06200000\x10\x80\xc2\xd7/\x1a\x1abluzelleTestNetPrivate-136 \xbe\x02')
-        expected_signature = b'Nn\xa9\xed\xc8\xdb\xbf%\x1d1Y\xc1\xa3\x8d\x04SR94\xaf\x1b\\\xe7\x07\xfa\x96B\xafX\xa7\xc2\x99Up-M\xb3\xa7' \
-                             b'\xeb\xc6\xf1\xdc\x14\xf7>\x07\xb6l\x0f\x96\xa2\x18\t\x96\xfb\x89\x18\xe0\x1aC\x15"\xd7\xa9'
-        assert tx_sign_val == expected_signature

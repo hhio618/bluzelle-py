@@ -11,8 +11,7 @@ from bluzelle.codec.cosmos.auth.v1beta1.query_pb2_grpc import QueryStub
 from bluzelle.codec.cosmos.base.v1beta1.coin_pb2 import Coin
 from bluzelle.codec.cosmos.tx.signing.v1beta1.signing_pb2 import SIGN_MODE_DIRECT
 from bluzelle.codec.cosmos.tx.v1beta1.tx_pb2 import Fee
-from bluzelle.cosmos import Transaction
-from bluzelle.cosmos._sign_mode_handler import DirectSignModeHandler
+from bluzelle.cosmos import DirectSignModeHandler, Transaction
 from bluzelle.cosmos._wallet import Wallet
 from bluzelle.tendermint import Tendermint34Client
 from bluzelle.utils import get_logger
@@ -115,7 +114,7 @@ class TransactionClient(RpcChannel):
         )
 
         # Creating the raw transaction.
-        tx = await Transaction(
+        tx = Transaction(
             account=account,
             messages=messages,
             sign_mode=SIGN_MODE_DIRECT,
@@ -123,13 +122,13 @@ class TransactionClient(RpcChannel):
             fee=fee,
             memo=memo,
             chain_id=chain_id,
-        ).create()
-
-        # Signing the transaction offline.
-        signed_tx = tx.sign(
-            sign_mode_handler=DirectSignModeHandler(),
         )
 
+        # Calculating the raw transaction bytes.
+        raw_bytes = tx.create(sign_mode_handler=DirectSignModeHandler())
+
+        # Signing the raw transaction bytes offline.
+        signed_tx = tx.sign(raw_bytes)
         self.logger.debug("signed transaction, signed_tx=%s", signed_tx)
         return signed_tx
 

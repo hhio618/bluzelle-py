@@ -2,6 +2,7 @@
 
 from hdwallets import BIP32DerivationError as BIP32DerivationError  # noqa: F401
 
+from ._sign_mode_handler import DirectSignModeHandler  # noqa: F401
 from ._transaction import Transaction as Transaction  # noqa: F401
 from ._wallet import DEFAULT_DERIVATION_PATH as PATH  # noqa: F401
 from ._wallet import generate_wallet as generate_wallet  # noqa: F401

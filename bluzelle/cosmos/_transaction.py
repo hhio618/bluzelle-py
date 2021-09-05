@@ -94,11 +94,16 @@ class Transaction:
         self._tx.auth_info.signer_infos.extend(signer_infos)
         return self
 
-    async def create(self):
+    def create(self, sign_mode_handler: SignModeHandler):
         """Creates a raw transaction.
 
         Args:
-          sign_mode:
+          sign_mode_handler: Responsible to calculating sign bytes of the signed
+             the transaction.
+
+        Return:
+            raw_bytes: raw transaction data.
+
         Raises:
           ValueError: gas_limit for the transaction should be a positive number.
         """
@@ -134,22 +139,6 @@ class Transaction:
             sequence=acc.sequence,
         )
         self._set_signatures([sig])
-        return self
-
-    def sign(
-        self,
-        sign_mode_handler: SignModeHandler,
-    ) -> bytes:
-        """Sign the raw transaction.
-
-        Args:
-          sign_mode_handler: Responsible to calculating sign bytes of the signed
-             the transaction.
-
-        Raises:
-          ValueError: for different sign_mode from the current one that used to
-             create the raw transaction.
-        """
 
         # Checking sign mode from the sign_mode_handler.
         if self._sign_mode != sign_mode_handler.get_mode():
@@ -164,14 +153,27 @@ class Transaction:
             account_number=self._account.account_number,
             sequence=self._account.sequence,
         )
-        bytes_to_sign = sign_mode_handler.get_sign_bytes(
+        return sign_mode_handler.get_sign_bytes(
             mode=self._sign_mode,
             data=signer_data,
             tx=self._tx,
         )
 
+    def sign(
+        self,
+        raw_bytes: bytes,
+    ) -> bytes:
+        """Sign the raw transaction.
+
+        Args:
+          raw_bytes: raw transaction bytes
+
+        Raises:
+          ValueError: for different sign_mode from the current one that used to
+             create the raw transaction.
+        """
         # Sign those bytes.
-        sig_bytes = self._sign(bytes_to_sign)
+        sig_bytes = self._sign(raw_bytes)
 
         # Construct the SignatureV2 struct.
         sig_data = SingleSignatureData(
